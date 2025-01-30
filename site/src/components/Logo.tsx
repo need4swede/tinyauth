@@ -1,11 +1,11 @@
 // src/components/Logo.tsx
-import logo from '../img/logo.png';  // Import the PNG file
+import logo from '../img/logo.svg';
 
 export const Logo = () => {
   return (
     <img 
       src={logo} 
-      alt="NJESD Logo" 
+      alt="Minas Tirith Logo" 
       style={{ 
         width: '8rem', 
         height: 'auto', 

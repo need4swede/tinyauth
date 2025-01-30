@@ -108,14 +108,14 @@ export const LoginPage = () => {
       <Logo />
       <Paper shadow="none" p="xl" mt={30} radius="md" withBorder={false}>
         {configuredProviders.length === 0 && (
-          <Text size="lg" mb="md" fw={500} ta="center">
-            Single Sign-On
+          <Text size="lg" fw={500} ta="center" fs="italic">
+            Not all those who wander are lost
           </Text>
         )}
         {configuredProviders.length > 0 && (
           <>
-            <Text size="lg" fw={500} ta="center">
-              Login via SSO
+            <Text size="lg" fw={500} ta="center" fs="italic">
+              Not all those who wander are lost
             </Text>
             <Grid mb="md" mt="md" align="center" justify="center">
               {configuredProviders.includes("google") && (
@@ -159,14 +159,14 @@ export const LoginPage = () => {
                     onClick={() => loginOAuthMutation.mutate("generic")}
                     loading={loginOAuthMutation.isLoading}
                   >
-                    District Email
+                    OAuth 2.0
                   </Button>
                 </Grid.Col>
               )}
             </Grid>
             {configuredProviders.includes("username") && (
               <Divider
-                label="Or continue with password"
+                label="Authentication Required"
                 labelPosition="center"
                 my="lg"
               />
@@ -177,7 +177,7 @@ export const LoginPage = () => {
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <TextInput
               label="Username"
-              placeholder="bbaggins@njes.org"
+              placeholder="faramir@minastirith.net"
               required
               disabled={loginMutation.isLoading}
               key={form.key("username")}
@@ -185,7 +185,7 @@ export const LoginPage = () => {
             />
             <PasswordInput
               label="Password"
-              placeholder="BagEnd123!"
+              placeholder="Capta1n0fG0nd0r!"
               required
               mt="md"
               disabled={loginMutation.isLoading}
