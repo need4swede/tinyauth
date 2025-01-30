@@ -3,7 +3,6 @@ import {
   Paper,
   PasswordInput,
   TextInput,
-  Title,
   Text,
   Divider,
   Grid,
@@ -19,6 +18,7 @@ import { Layout } from "../components/layouts/layout";
 import { GoogleIcon } from "../icons/google";
 import { GithubIcon } from "../icons/github";
 import { OAuthIcon } from "../icons/oauth";
+import { Logo } from "../components/Logo";
 
 export const LoginPage = () => {
   const queryString = window.location.search;
@@ -105,17 +105,17 @@ export const LoginPage = () => {
 
   return (
     <Layout>
-      <Title ta="center">NJESD IT Department</Title>
-      <Paper shadow="md" p="xl" mt={30} radius="md" withBorder>
+      <Logo />
+      <Paper shadow="none" p="xl" mt={30} radius="md" withBorder={false}>
         {configuredProviders.length === 0 && (
           <Text size="lg" mb="md" fw={500} ta="center">
-            NJESD Single Sign-On
+            Single Sign-On
           </Text>
         )}
         {configuredProviders.length > 0 && (
           <>
             <Text size="lg" fw={500} ta="center">
-              NJESD Single Sign-On
+              Login via SSO
             </Text>
             <Grid mb="md" mt="md" align="center" justify="center">
               {configuredProviders.includes("google") && (
@@ -159,7 +159,7 @@ export const LoginPage = () => {
                     onClick={() => loginOAuthMutation.mutate("generic")}
                     loading={loginOAuthMutation.isLoading}
                   >
-                    Login with District Email
+                    District Email
                   </Button>
                 </Grid.Col>
               )}
@@ -185,7 +185,7 @@ export const LoginPage = () => {
             />
             <PasswordInput
               label="Password"
-              placeholder="BagEnd123!z"
+              placeholder="BagEnd123!"
               required
               mt="md"
               disabled={loginMutation.isLoading}
