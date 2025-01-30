@@ -105,17 +105,17 @@ export const LoginPage = () => {
 
   return (
     <Layout>
-      <Title ta="center">Tinyauth</Title>
+      <Title ta="center">NJESD IT Department</Title>
       <Paper shadow="md" p="xl" mt={30} radius="md" withBorder>
         {configuredProviders.length === 0 && (
           <Text size="lg" mb="md" fw={500} ta="center">
-            Welcome back, please login
+            NJESD Single Sign-On
           </Text>
         )}
         {configuredProviders.length > 0 && (
           <>
             <Text size="lg" fw={500} ta="center">
-              Welcome back, login with
+              NJESD Single Sign-On
             </Text>
             <Grid mb="md" mt="md" align="center" justify="center">
               {configuredProviders.includes("google") && (
@@ -159,7 +159,7 @@ export const LoginPage = () => {
                     onClick={() => loginOAuthMutation.mutate("generic")}
                     loading={loginOAuthMutation.isLoading}
                   >
-                    Generic
+                    Login with District Email
                   </Button>
                 </Grid.Col>
               )}
@@ -177,7 +177,7 @@ export const LoginPage = () => {
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <TextInput
               label="Username"
-              placeholder="user@example.com"
+              placeholder="bbaggins@njes.org"
               required
               disabled={loginMutation.isLoading}
               key={form.key("username")}
@@ -185,7 +185,7 @@ export const LoginPage = () => {
             />
             <PasswordInput
               label="Password"
-              placeholder="password"
+              placeholder="BagEnd123!z"
               required
               mt="md"
               disabled={loginMutation.isLoading}
