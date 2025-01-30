@@ -3,15 +3,22 @@ import React, { createContext, useContext } from "react";
 import { UserContextSchemaType } from "../schemas/user-context-schema";
 import axios from "axios";
 
-const UserContext = createContext<UserContextSchemaType | null>(null);
+// Extend the context type to ensure disableContinue is included
+type EnhancedUserContextType = UserContextSchemaType & {
+  disableContinue: boolean;
+};
+
+const UserContext = createContext<EnhancedUserContextType | null>(null);
 
 export const UserContextProvider = ({
   children,
+  autoRedirect = true, // Add prop to control behavior
 }: {
   children: React.ReactNode;
+  autoRedirect?: boolean;
 }) => {
   const {
-    data: userContext,
+    data: userContextData,
     isLoading,
     error,
   } = useQuery({
@@ -26,17 +33,25 @@ export const UserContextProvider = ({
     throw error;
   }
 
+  // Enhance the context with disableContinue
+  const enhancedContext: EnhancedUserContextType | null = userContextData
+    ? {
+        ...userContextData,
+        disableContinue: autoRedirect, // Set based on prop
+      }
+    : null;
+
   return (
-    <UserContext.Provider value={userContext}>{children}</UserContext.Provider>
+    <UserContext.Provider value={enhancedContext}>
+      {children}
+    </UserContext.Provider>
   );
 };
 
 export const useUserContext = () => {
   const context = useContext(UserContext);
-
   if (context === null) {
     throw new Error("useUserContext must be used within a UserContextProvider");
   }
-
   return context;
 };
