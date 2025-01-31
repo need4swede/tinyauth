@@ -3,6 +3,8 @@ package auth
 import (
 	"tinyauth/internal/types"
 
+	"strings"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -36,15 +38,23 @@ func (auth *Auth) CheckPassword(user types.User, password string) bool {
 }
 
 func (auth *Auth) EmailWhitelisted(emailSrc string) bool {
-	if len(auth.OAuthWhitelist) == 0 {
-		return true
-	}
-	for _, email := range auth.OAuthWhitelist {
-		if email == emailSrc {
-			return true
-		}
-	}
-	return false
+    if len(auth.OAuthWhitelist) == 0 {
+        return true
+    }
+    for _, allowedPattern := range auth.OAuthWhitelist {
+        // Check exact match first
+        if allowedPattern == emailSrc {
+            return true
+        }
+        // Check domain wildcard match
+        if strings.HasPrefix(allowedPattern, "*@") {
+            domain := strings.TrimPrefix(allowedPattern, "*@")
+            if strings.HasSuffix(emailSrc, "@"+domain) {
+                return true
+            }
+        }
+    }
+    return false
 }
 
 func (auth *Auth) CreateSessionCookie(c *gin.Context, data *types.SessionCookie) {
