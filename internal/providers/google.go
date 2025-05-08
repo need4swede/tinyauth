@@ -4,44 +4,67 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strings"
+	"tinyauth/internal/constants"
 
 	"github.com/rs/zerolog/log"
 )
 
+// Response for the google user endpoint
 type GoogleUserInfoResponse struct {
 	Email string `json:"email"`
+	Name  string `json:"name"`
 }
 
+// The scopes required for the google provider
 func GoogleScopes() []string {
-	return []string{"https://www.googleapis.com/auth/userinfo.email"}
+	return []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"}
 }
 
-func GetGoogleEmail(client *http.Client) (string, error) {
-	res, resErr := client.Get("https://www.googleapis.com/userinfo/v2/me")
+func GetGoogleUser(client *http.Client) (constants.Claims, error) {
+	// Create user struct
+	var user constants.Claims
 
-	if resErr != nil {
-		return "", resErr
+	// Get the user info from google using the oauth http client
+	res, err := client.Get("https://www.googleapis.com/userinfo/v2/me")
+
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
+
+	defer res.Body.Close()
 
 	log.Debug().Msg("Got response from google")
 
-	body, bodyErr := io.ReadAll(res.Body)
+	// Read the body of the response
+	body, err := io.ReadAll(res.Body)
 
-	if bodyErr != nil {
-		return "", bodyErr
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
 
 	log.Debug().Msg("Read body from google")
 
-	var user GoogleUserInfoResponse
+	// Create a new user info struct
+	var userInfo GoogleUserInfoResponse
 
-	jsonErr := json.Unmarshal(body, &user)
+	// Unmarshal the body into the user struct
+	err = json.Unmarshal(body, &userInfo)
 
-	if jsonErr != nil {
-		return "", jsonErr
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
 
 	log.Debug().Msg("Parsed user from google")
 
-	return user.Email, nil
+	// Map the user info to the user struct
+	user.PreferredUsername = strings.Split(userInfo.Email, "@")[0]
+	user.Name = userInfo.Name
+	user.Email = userInfo.Email
+
+	// Return the user
+	return user, nil
 }

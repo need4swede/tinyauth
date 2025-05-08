@@ -1,21 +1,18 @@
 package types
 
-import "tinyauth/internal/oauth"
+import (
+	"time"
+	"tinyauth/internal/oauth"
+)
 
-type LoginQuery struct {
-	RedirectURI string `url:"redirect_uri"`
-}
-
-type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
+// User is the struct for a user
 type User struct {
-	Username string
-	Password string
+	Username   string
+	Password   string
+	TotpSecret string
 }
 
+// Users is a list of users
 type Users []User
 
 type Config struct {
@@ -87,11 +84,41 @@ type OAuthProviders struct {
 	Microsoft *oauth.OAuth
 }
 
-type UnauthorizedQuery struct {
-	Username string `url:"username"`
+// SessionCookie is the cookie for the session (exculding the expiry)
+type SessionCookie struct {
+	Username    string
+	Name        string
+	Email       string
+	Provider    string
+	TotpPending bool
+	OAuthGroups string
 }
 
-type SessionCookie struct {
-	Username string
-	Provider string
+// TinyauthLabels is the labels for the tinyauth container
+type TinyauthLabels struct {
+	OAuthWhitelist string
+	Users          string
+	Allowed        string
+	Headers        map[string]string
+	OAuthGroups    string
+}
+
+// UserContext is the context for the user
+type UserContext struct {
+	Username    string
+	Name        string
+	Email       string
+	IsLoggedIn  bool
+	OAuth       bool
+	Provider    string
+	TotpPending bool
+	OAuthGroups string
+	TotpEnabled bool
+}
+
+// LoginAttempt tracks information about login attempts for rate limiting
+type LoginAttempt struct {
+	FailedAttempts int
+	LastAttempt    time.Time
+	LockedUntil    time.Time
 }

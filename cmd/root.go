@@ -1,13 +1,17 @@
 package cmd
 
 import (
+	"errors"
 	"os"
 	"strings"
 	"time"
-	cmd "tinyauth/cmd/user"
+	totpCmd "tinyauth/cmd/totp"
+	userCmd "tinyauth/cmd/user"
 	"tinyauth/internal/api"
 	"tinyauth/internal/assets"
 	"tinyauth/internal/auth"
+	"tinyauth/internal/docker"
+	"tinyauth/internal/handlers"
 	"tinyauth/internal/hooks"
 	"tinyauth/internal/providers"
 	"tinyauth/internal/types"
@@ -30,8 +34,8 @@ var rootCmd = &cobra.Command{
 
 		// Get config
 		var config types.Config
-		parseErr := viper.Unmarshal(&config)
-		HandleError(parseErr, "Failed to parse config")
+		err := viper.Unmarshal(&config)
+		HandleError(err, "Failed to parse config")
 
 		// Secrets
 		config.Secret = utils.GetSecret(config.Secret, config.SecretFile)
@@ -41,8 +45,8 @@ var rootCmd = &cobra.Command{
 
 		// Validate config
 		validator := validator.New()
-		validateErr := validator.Struct(config)
-		HandleError(validateErr, "Failed to validate config")
+		err = validator.Struct(config)
+		HandleError(err, "Failed to validate config")
 
 		// Logger
 		log.Logger = log.Level(zerolog.Level(config.LogLevel))
@@ -50,15 +54,18 @@ var rootCmd = &cobra.Command{
 
 		// Users
 		log.Info().Msg("Parsing users")
-		users, usersErr := utils.GetUsers(config.Users, config.UsersFile)
+		users, err := utils.GetUsers(config.Users, config.UsersFile)
+		HandleError(err, "Failed to parse users")
 
-		if (len(users) == 0 || usersErr != nil) && !utils.OAuthConfigured(config) {
-			log.Fatal().Err(usersErr).Msg("Failed to parse users")
+		if len(users) == 0 && !utils.OAuthConfigured(config) {
+			HandleError(errors.New("no users or OAuth configured"), "No users or OAuth configured")
 		}
 
-		// Create oauth whitelist
-		oauthWhitelist := strings.Split(config.OAuthWhitelist, ",")
-		log.Debug().Msg("Parsed OAuth whitelist")
+		// Get domain
+		log.Debug().Msg("Getting domain")
+		domain, err := utils.GetUpperDomain(config.AppURL)
+		HandleError(err, "Failed to get upper domain")
+		log.Info().Str("domain", domain).Msg("Using domain for cookie store")
 
 		// Create OAuth config
 		oauthConfig := types.OAuthConfig{
@@ -75,10 +82,50 @@ var rootCmd = &cobra.Command{
 			AppURL:              config.AppURL,
 		}
 
-		log.Debug().Msg("Parsed OAuth config")
+		// Create handlers config
+		handlersConfig := types.HandlersConfig{
+			AppURL:                config.AppURL,
+			DisableContinue:       config.DisableContinue,
+			Title:                 config.Title,
+			GenericName:           config.GenericName,
+			CookieSecure:          config.CookieSecure,
+			Domain:                domain,
+			ForgotPasswordMessage: config.FogotPasswordMessage,
+			OAuthAutoRedirect:     config.OAuthAutoRedirect,
+		}
+
+		// Create api config
+		apiConfig := types.APIConfig{
+			Port:    config.Port,
+			Address: config.Address,
+		}
+
+		// Create auth config
+		authConfig := types.AuthConfig{
+			Users:           users,
+			OauthWhitelist:  config.OAuthWhitelist,
+			Secret:          config.Secret,
+			CookieSecure:    config.CookieSecure,
+			SessionExpiry:   config.SessionExpiry,
+			Domain:          domain,
+			LoginTimeout:    config.LoginTimeout,
+			LoginMaxRetries: config.LoginMaxRetries,
+		}
+
+		// Create hooks config
+		hooksConfig := types.HooksConfig{
+			Domain: domain,
+		}
+
+		// Create docker service
+		docker := docker.NewDocker()
+
+		// Initialize docker
+		err = docker.Init()
+		HandleError(err, "Failed to initialize docker")
 
 		// Create auth service
-		auth := auth.NewAuth(users, oauthWhitelist)
+		auth := auth.NewAuth(authConfig, docker)
 
 		// Create OAuth providers service
 		providers := providers.NewProviders(oauthConfig)
@@ -87,18 +134,13 @@ var rootCmd = &cobra.Command{
 		providers.Init()
 
 		// Create hooks service
-		hooks := hooks.NewHooks(auth, providers)
+		hooks := hooks.NewHooks(hooksConfig, auth, providers)
+
+		// Create handlers
+		handlers := handlers.NewHandlers(handlersConfig, auth, hooks, providers, docker)
 
 		// Create API
-		api := api.NewAPI(types.APIConfig{
-			Port:            config.Port,
-			Address:         config.Address,
-			Secret:          config.Secret,
-			AppURL:          config.AppURL,
-			CookieSecure:    config.CookieSecure,
-			DisableContinue: config.DisableContinue,
-			CookieExpiry:    config.CookieExpiry,
-		}, hooks, auth, providers)
+		api := api.NewAPI(apiConfig, handlers)
 
 		// Setup routes
 		api.Init()
@@ -111,20 +153,27 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	err := rootCmd.Execute()
-	if err != nil {
-		log.Fatal().Err(err).Msg("Failed to execute command")
-	}
+	HandleError(err, "Failed to execute root command")
 }
 
 func HandleError(err error, msg string) {
+	// If error, log it and exit
 	if err != nil {
 		log.Fatal().Err(err).Msg(msg)
 	}
 }
 
 func init() {
-	rootCmd.AddCommand(cmd.UserCmd())
+	// Add user command
+	rootCmd.AddCommand(userCmd.UserCmd())
+
+	// Add totp command
+	rootCmd.AddCommand(totpCmd.TotpCmd())
+
+	// Read environment variables
 	viper.AutomaticEnv()
+
+	// Flags
 	rootCmd.Flags().Int("port", 3000, "Port to run the server on.")
 	rootCmd.Flags().String("address", "0.0.0.0", "Address to bind the server to.")
 	rootCmd.Flags().String("secret", "", "Secret to use for the cookie.")
@@ -146,10 +195,18 @@ func init() {
 	rootCmd.Flags().String("generic-auth-url", "", "Generic OAuth auth URL.")
 	rootCmd.Flags().String("generic-token-url", "", "Generic OAuth token URL.")
 	rootCmd.Flags().String("generic-user-url", "", "Generic OAuth user info URL.")
+	rootCmd.Flags().String("generic-name", "Generic", "Generic OAuth provider name.")
 	rootCmd.Flags().Bool("disable-continue", false, "Disable continue screen and redirect to app directly.")
 	rootCmd.Flags().String("oauth-whitelist", "", "Comma separated list of email addresses to whitelist when using OAuth.")
-	rootCmd.Flags().Int("cookie-expiry", 86400, "Cookie expiration time in seconds.")
+	rootCmd.Flags().String("oauth-auto-redirect", "none", "Auto redirect to the specified OAuth provider if configured. (available providers: github, google, generic)")
+	rootCmd.Flags().Int("session-expiry", 86400, "Session (cookie) expiration time in seconds.")
+	rootCmd.Flags().Int("login-timeout", 300, "Login timeout in seconds after max retries reached (0 to disable).")
+	rootCmd.Flags().Int("login-max-retries", 5, "Maximum login attempts before timeout (0 to disable).")
 	rootCmd.Flags().Int("log-level", 1, "Log level.")
+	rootCmd.Flags().String("app-title", "Tinyauth", "Title of the app.")
+	rootCmd.Flags().String("forgot-password-message", "You can reset your password by changing the `USERS` environment variable.", "Message to show on the forgot password page.")
+
+	// Bind flags to environment
 	viper.BindEnv("port", "PORT")
 	viper.BindEnv("address", "ADDRESS")
 	viper.BindEnv("secret", "SECRET")
@@ -171,9 +228,17 @@ func init() {
 	viper.BindEnv("generic-auth-url", "GENERIC_AUTH_URL")
 	viper.BindEnv("generic-token-url", "GENERIC_TOKEN_URL")
 	viper.BindEnv("generic-user-url", "GENERIC_USER_URL")
+	viper.BindEnv("generic-name", "GENERIC_NAME")
 	viper.BindEnv("disable-continue", "DISABLE_CONTINUE")
 	viper.BindEnv("oauth-whitelist", "OAUTH_WHITELIST")
-	viper.BindEnv("cookie-expiry", "COOKIE_EXPIRY")
+	viper.BindEnv("oauth-auto-redirect", "OAUTH_AUTO_REDIRECT")
+	viper.BindEnv("session-expiry", "SESSION_EXPIRY")
 	viper.BindEnv("log-level", "LOG_LEVEL")
+	viper.BindEnv("app-title", "APP_TITLE")
+	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
+	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
+	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")
+
+	// Bind flags to viper
 	viper.BindPFlags(rootCmd.Flags())
 }

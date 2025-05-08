@@ -2,92 +2,121 @@ package verify
 
 import (
 	"errors"
-	"strings"
+	"tinyauth/internal/utils"
 
 	"github.com/charmbracelet/huh"
+	"github.com/pquerna/otp/totp"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Interactive flag
 var interactive bool
-var username string
-var password string
+
+// Docker flag
 var docker bool
-var user string
+
+// i stands for input
+var iUsername string
+var iPassword string
+var iTotp string
+var iUser string
 
 var VerifyCmd = &cobra.Command{
 	Use:   "verify",
 	Short: "Verify a user is set up correctly",
-	Long:  `Verify a user is set up correctly meaning that it has a correct username and password.`,
+	Long:  `Verify a user is set up correctly meaning that it has a correct username, password and totp code.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Setup logger
 		log.Logger = log.Level(zerolog.InfoLevel)
 
+		// Use simple theme
+		var baseTheme *huh.Theme = huh.ThemeBase()
+
+		// Check if interactive
 		if interactive {
+			// Create huh form
 			form := huh.NewForm(
 				huh.NewGroup(
-					huh.NewInput().Title("User (username:hash)").Value(&user).Validate((func(s string) error {
+					huh.NewInput().Title("User (username:hash:totp)").Value(&iUser).Validate((func(s string) error {
 						if s == "" {
 							return errors.New("user cannot be empty")
 						}
 						return nil
 					})),
-					huh.NewInput().Title("Username").Value(&username).Validate((func(s string) error {
+					huh.NewInput().Title("Username").Value(&iUsername).Validate((func(s string) error {
 						if s == "" {
 							return errors.New("username cannot be empty")
 						}
 						return nil
 					})),
-					huh.NewInput().Title("Password").Value(&password).Validate((func(s string) error {
+					huh.NewInput().Title("Password").Value(&iPassword).Validate((func(s string) error {
 						if s == "" {
 							return errors.New("password cannot be empty")
 						}
 						return nil
 					})),
-					huh.NewSelect[bool]().Title("Is the user formatted for docker?").Options(huh.NewOption("Yes", true), huh.NewOption("No", false)).Value(&docker),
+					huh.NewInput().Title("Totp Code (if setup)").Value(&iTotp),
 				),
 			)
 
-			var baseTheme *huh.Theme = huh.ThemeBase()
+			// Run form
+			err := form.WithTheme(baseTheme).Run()
 
-			formErr := form.WithTheme(baseTheme).Run()
-
-			if formErr != nil {
-				log.Fatal().Err(formErr).Msg("Form failed")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Form failed")
 			}
 		}
 
-		if username == "" || password == "" || user == "" {
-			log.Fatal().Msg("Username, password and user cannot be empty")
+		// Parse user
+		user, err := utils.ParseUser(iUser)
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("Failed to parse user")
 		}
 
-		log.Info().Str("user", user).Str("username", username).Str("password", password).Bool("docker", docker).Msg("Verifying user")
-
-		userSplit := strings.Split(user, ":")
-
-		if userSplit[1] == "" {
-			log.Fatal().Msg("User is not formatted correctly")
+		// Compare username
+		if user.Username != iUsername {
+			log.Fatal().Msg("Username is incorrect")
 		}
 
-		if docker {
-			userSplit[1] = strings.ReplaceAll(userSplit[1], "$$", "$")
+		// Compare password
+		err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(iPassword))
+
+		if err != nil {
+			log.Fatal().Msg("Ppassword is incorrect")
 		}
 
-		verifyErr := bcrypt.CompareHashAndPassword([]byte(userSplit[1]), []byte(password))
-
-		if verifyErr != nil || username != userSplit[0] {
-			log.Fatal().Msg("Username or password incorrect")
-		} else {
-			log.Info().Msg("Verification successful")
+		// Check if user has 2fa code
+		if user.TotpSecret == "" {
+			if iTotp != "" {
+				log.Warn().Msg("User does not have 2fa secret")
+			}
+			log.Info().Msg("User verified")
+			return
 		}
+
+		// Check totp code
+		ok := totp.Validate(iTotp, user.TotpSecret)
+
+		if !ok {
+			log.Fatal().Msg("Totp code incorrect")
+
+		}
+
+		// Done
+		log.Info().Msg("User verified")
 	},
 }
 
 func init() {
+	// Flags
 	VerifyCmd.Flags().BoolVarP(&interactive, "interactive", "i", false, "Create a user interactively")
 	VerifyCmd.Flags().BoolVar(&docker, "docker", false, "Is the user formatted for docker?")
-	VerifyCmd.Flags().StringVar(&username, "username", "", "Username")
-	VerifyCmd.Flags().StringVar(&password, "password", "", "Password")
-	VerifyCmd.Flags().StringVar(&user, "user", "", "Hash (username:hash combination)")
+	VerifyCmd.Flags().StringVar(&iUsername, "username", "", "Username")
+	VerifyCmd.Flags().StringVar(&iPassword, "password", "", "Password")
+	VerifyCmd.Flags().StringVar(&iTotp, "totp", "", "Totp code")
+	VerifyCmd.Flags().StringVar(&iUser, "user", "", "Hash (username:hash:totp combination)")
 }
