@@ -4,40 +4,47 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"tinyauth/internal/constants"
 
 	"github.com/rs/zerolog/log"
 )
 
-type GenericUserInfoResponse struct {
-	Email string `json:"email"`
-}
+func GetGenericUser(client *http.Client, url string) (constants.Claims, error) {
+	// Create user struct
+	var user constants.Claims
 
-func GetGenericEmail(client *http.Client, url string) (string, error) {
-	res, resErr := client.Get(url)
+	// Using the oauth client get the user info url
+	res, err := client.Get(url)
 
-	if resErr != nil {
-		return "", resErr
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
+
+	defer res.Body.Close()
 
 	log.Debug().Msg("Got response from generic provider")
 
-	body, bodyErr := io.ReadAll(res.Body)
+	// Read the body of the response
+	body, err := io.ReadAll(res.Body)
 
-	if bodyErr != nil {
-		return "", bodyErr
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
 
 	log.Debug().Msg("Read body from generic provider")
 
-	var user GenericUserInfoResponse
+	// Unmarshal the body into the user struct
+	err = json.Unmarshal(body, &user)
 
-	jsonErr := json.Unmarshal(body, &user)
-
-	if jsonErr != nil {
-		return "", jsonErr
+	// Check if there was an error
+	if err != nil {
+		return user, err
 	}
 
 	log.Debug().Msg("Parsed user from generic provider")
 
-	return user.Email, nil
+	// Return the user
+	return user, nil
 }

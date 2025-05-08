@@ -12,28 +12,36 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Interactive flag
 var interactive bool
-var username string
-var password string
+
+// Docker flag
 var docker bool
+
+// i stands for input
+var iUsername string
+var iPassword string
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Create a user",
 	Long:  `Create a user either interactively or by passing flags.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Setup logger
 		log.Logger = log.Level(zerolog.InfoLevel)
 
+		// Check if interactive
 		if interactive {
+			// Create huh form
 			form := huh.NewForm(
 				huh.NewGroup(
-					huh.NewInput().Title("Username").Value(&username).Validate((func(s string) error {
+					huh.NewInput().Title("Username").Value(&iUsername).Validate((func(s string) error {
 						if s == "" {
 							return errors.New("username cannot be empty")
 						}
 						return nil
 					})),
-					huh.NewInput().Title("Password").Value(&password).Validate((func(s string) error {
+					huh.NewInput().Title("Password").Value(&iPassword).Validate((func(s string) error {
 						if s == "" {
 							return errors.New("password cannot be empty")
 						}
@@ -43,40 +51,47 @@ var CreateCmd = &cobra.Command{
 				),
 			)
 
+			// Use simple theme
 			var baseTheme *huh.Theme = huh.ThemeBase()
 
-			formErr := form.WithTheme(baseTheme).Run()
+			err := form.WithTheme(baseTheme).Run()
 
-			if formErr != nil {
-				log.Fatal().Err(formErr).Msg("Form failed")
+			if err != nil {
+				log.Fatal().Err(err).Msg("Form failed")
 			}
 		}
 
-		if username == "" || password == "" {
-			log.Error().Msg("Username and password cannot be empty")
+		// Do we have username and password?
+		if iUsername == "" || iPassword == "" {
+			log.Fatal().Err(errors.New("error invalid input")).Msg("Username and password cannot be empty")
 		}
 
-		log.Info().Str("username", username).Str("password", password).Bool("docker", docker).Msg("Creating user")
+		log.Info().Str("username", iUsername).Str("password", iPassword).Bool("docker", docker).Msg("Creating user")
 
-		passwordByte, passwordErr := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		// Hash password
+		password, err := bcrypt.GenerateFromPassword([]byte(iPassword), bcrypt.DefaultCost)
 
-		if passwordErr != nil {
-			log.Fatal().Err(passwordErr).Msg("Failed to hash password")
+		if err != nil {
+			log.Fatal().Err(err).Msg("Failed to hash password")
 		}
 
-		passwordString := string(passwordByte)
+		// Convert password to string
+		passwordString := string(password)
 
+		// Escape $ for docker
 		if docker {
 			passwordString = strings.ReplaceAll(passwordString, "$", "$$")
 		}
 
-		log.Info().Str("user", fmt.Sprintf("%s:%s", username, passwordString)).Msg("User created")
+		// Log user created
+		log.Info().Str("user", fmt.Sprintf("%s:%s", iUsername, passwordString)).Msg("User created")
 	},
 }
 
 func init() {
-	CreateCmd.Flags().BoolVar(&interactive, "interactive", false, "Create a user interactively")
+	// Flags
+	CreateCmd.Flags().BoolVarP(&interactive, "interactive", "i", false, "Create a user interactively")
 	CreateCmd.Flags().BoolVar(&docker, "docker", false, "Format output for docker")
-	CreateCmd.Flags().StringVar(&username, "username", "", "Username")
-	CreateCmd.Flags().StringVar(&password, "password", "", "Password")
+	CreateCmd.Flags().StringVar(&iUsername, "username", "", "Username")
+	CreateCmd.Flags().StringVar(&iPassword, "password", "", "Password")
 }
