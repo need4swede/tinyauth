@@ -40,7 +40,11 @@ export const LoginPage = () => {
     logo,
     logoSize,
     loginTitleSize,
-    loginSubtitleSize
+    loginSubtitleSize,
+    disableBorder,
+    loginCardColor,
+    loginTitleColor,
+    loginSubtitleColor
   } = useAppContext();
   const { search } = useLocation();
   const { t } = useTranslation();
@@ -120,7 +124,12 @@ export const LoginPage = () => {
   }, []);
 
   return (
-    <Card className="min-w-xs sm:min-w-sm">
+    <Card
+      className={`min-w-xs sm:min-w-sm ${disableBorder ? 'border-0' : ''}`}
+      style={{
+        backgroundColor: loginCardColor || undefined,
+      }}
+    >
       <CardHeader>
         {logo && (
           <div className="flex justify-center mb-4">
@@ -161,7 +170,12 @@ export const LoginPage = () => {
           };
           const titleSize = (loginTitleSize && loginTitleSize in sizeMap ? loginTitleSize : "3xl") as keyof typeof sizeMap;
           return (
-            <CardTitle className={`text-center ${sizeMap[titleSize] || "text-3xl"}`}>
+            <CardTitle
+              className={`text-center ${sizeMap[titleSize] || "text-3xl"}`}
+              style={{
+                color: loginTitleColor || undefined,
+              }}
+            >
               {loginTitle || title}
             </CardTitle>
           );
@@ -179,7 +193,12 @@ export const LoginPage = () => {
             };
             const subtitleSize = (loginSubtitleSize && loginSubtitleSize in sizeMap ? loginSubtitleSize : "lg") as keyof typeof sizeMap;
             return (
-              <CardDescription className={`text-center ${sizeMap[subtitleSize] || "text-lg"}`}>
+              <CardDescription
+                className={`text-center ${sizeMap[subtitleSize] || "text-lg"}`}
+                style={{
+                  color: loginSubtitleColor || undefined,
+                }}
+              >
                 {loginSubtitle || (oauthConfigured ? t("loginTitle") : t("loginTitleSimple"))}
               </CardDescription>
             );

@@ -27,7 +27,9 @@ export const LoginForm = (props: Props) => {
     usernameTitle,
     passwordTitle,
     usernamePlaceholder,
-    passwordPlaceholder
+    passwordPlaceholder,
+    usernameTextColor,
+    passwordTextColor
   } = useAppContext();
 
   z.config({
@@ -47,7 +49,14 @@ export const LoginForm = (props: Props) => {
           name="username"
           render={({ field }) => (
             <FormItem className="mb-4 gap-0">
-              <FormLabel className="mb-2">{usernameTitle || t("loginUsername")}</FormLabel>
+              <FormLabel
+                className="mb-2"
+                style={{
+                  color: usernameTextColor || undefined,
+                }}
+              >
+                {usernameTitle || t("loginUsername")}
+              </FormLabel>
               <FormControl className="mb-1">
                 <Input
                   placeholder={usernamePlaceholder || t("loginUsername")}
@@ -66,7 +75,14 @@ export const LoginForm = (props: Props) => {
           render={({ field }) => (
             <FormItem className="mb-4 gap-0">
               <div className="relative mb-1">
-                <FormLabel className="mb-2">{passwordTitle || t("loginPassword")}</FormLabel>
+                <FormLabel
+                  className="mb-2"
+                  style={{
+                    color: passwordTextColor || undefined,
+                  }}
+                >
+                  {passwordTitle || t("loginPassword")}
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder={passwordPlaceholder || t("loginPassword")}

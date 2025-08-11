@@ -110,6 +110,12 @@ var rootCmd = &cobra.Command{
 			LogoSize:              config.LogoSize,
 			LoginTitleSize:        config.LoginTitleSize,
 			LoginSubtitleSize:     config.LoginSubtitleSize,
+			DisableBorder:         config.DisableBorder,
+			LoginCardColor:        config.LoginCardColor,
+			LoginTitleColor:       config.LoginTitleColor,
+			LoginSubtitleColor:    config.LoginSubtitleColor,
+			UsernameTextColor:     config.UsernameTextColor,
+			PasswordTextColor:     config.PasswordTextColor,
 			OAuthAutoRedirect:     config.OAuthAutoRedirect,
 			CsrfCookieName:        csrfCookieName,
 			RedirectCookieName:    redirectCookieName,
@@ -244,6 +250,12 @@ func init() {
 	rootCmd.Flags().String("logo-size", "", "Size for the logo (xs, sm, md, lg, xl, 2xl, 3xl, 4xl).")
 	rootCmd.Flags().String("login-title-size", "", "Font size for the login title (sm, md, lg, xl, 2xl, 3xl, 4xl).")
 	rootCmd.Flags().String("login-subtitle-size", "", "Font size for the login subtitle (sm, md, lg, xl, 2xl, 3xl, 4xl).")
+	rootCmd.Flags().Bool("disable-border", false, "Disable the border around the login card.")
+	rootCmd.Flags().String("login-card-color", "", "Background color for the login card (e.g., #ffffff).")
+	rootCmd.Flags().String("login-title-color", "", "Text color for the login title (e.g., #000000).")
+	rootCmd.Flags().String("login-subtitle-color", "", "Text color for the login subtitle (e.g., #666666).")
+	rootCmd.Flags().String("username-text-color", "", "Text color for the username field label (e.g., #333333).")
+	rootCmd.Flags().String("password-text-color", "", "Text color for the password field label (e.g., #333333).")
 	rootCmd.Flags().String("forgot-password-message", "", "Message to show on the forgot password page.")
 	rootCmd.Flags().String("background-image", "/background.jpg", "Background image URL for the login page.")
 	rootCmd.Flags().String("ldap-address", "", "LDAP server address (e.g. ldap://localhost:389).")
@@ -299,6 +311,12 @@ func init() {
 	viper.BindEnv("logo-size", "LOGO_SIZE")
 	viper.BindEnv("login-title-size", "LOGIN_TITLE_SIZE")
 	viper.BindEnv("login-subtitle-size", "LOGIN_SUBTITLE_SIZE")
+	viper.BindEnv("disable-border", "DISABLE_BORDER")
+	viper.BindEnv("login-card-color", "LOGIN_CARD_COLOR")
+	viper.BindEnv("login-title-color", "LOGIN_TITLE_COLOR")
+	viper.BindEnv("login-subtitle-color", "LOGIN_SUBTITLE_COLOR")
+	viper.BindEnv("username-text-color", "USERNAME_TEXT_COLOR")
+	viper.BindEnv("password-text-color", "PASSWORD_TEXT_COLOR")
 	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
 	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
 	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")

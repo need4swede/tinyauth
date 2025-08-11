@@ -19,6 +19,12 @@ export const appContextSchema = z.object({
   logoSize: z.string().optional(),
   loginTitleSize: z.string().optional(),
   loginSubtitleSize: z.string().optional(),
+  disableBorder: z.boolean().optional(),
+  loginCardColor: z.string().optional(),
+  loginTitleColor: z.string().optional(),
+  loginSubtitleColor: z.string().optional(),
+  usernameTextColor: z.string().optional(),
+  passwordTextColor: z.string().optional(),
 });
 
 export type AppContextSchema = z.infer<typeof appContextSchema>;

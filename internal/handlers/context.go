@@ -114,6 +114,15 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	loginTitleSize := getDomainBranding(requestDomain, "LOGIN_TITLE_SIZE", h.Config.LoginTitleSize)
 	loginSubtitleSize := getDomainBranding(requestDomain, "LOGIN_SUBTITLE_SIZE", h.Config.LoginSubtitleSize)
 
+	// Get customization branding
+	disableBorderStr := getDomainBranding(requestDomain, "DISABLE_BORDER", "")
+	disableBorder := disableBorderStr == "true" || h.Config.DisableBorder
+	loginCardColor := getDomainBranding(requestDomain, "LOGIN_CARD_COLOR", h.Config.LoginCardColor)
+	loginTitleColor := getDomainBranding(requestDomain, "LOGIN_TITLE_COLOR", h.Config.LoginTitleColor)
+	loginSubtitleColor := getDomainBranding(requestDomain, "LOGIN_SUBTITLE_COLOR", h.Config.LoginSubtitleColor)
+	usernameTextColor := getDomainBranding(requestDomain, "USERNAME_TEXT_COLOR", h.Config.UsernameTextColor)
+	passwordTextColor := getDomainBranding(requestDomain, "PASSWORD_TEXT_COLOR", h.Config.PasswordTextColor)
+
 	// Log dynamic branding detection
 	if requestDomain != "" {
 		log.Debug().
@@ -145,6 +154,12 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LogoSize:              logoSize,
 		LoginTitleSize:        loginTitleSize,
 		LoginSubtitleSize:     loginSubtitleSize,
+		DisableBorder:         disableBorder,
+		LoginCardColor:        loginCardColor,
+		LoginTitleColor:       loginTitleColor,
+		LoginSubtitleColor:    loginSubtitleColor,
+		UsernameTextColor:     usernameTextColor,
+		PasswordTextColor:     passwordTextColor,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)

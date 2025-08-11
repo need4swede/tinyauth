@@ -63,6 +63,12 @@ type AppContext struct {
 	LogoSize              string   `json:"logoSize"`
 	LoginTitleSize        string   `json:"loginTitleSize"`
 	LoginSubtitleSize     string   `json:"loginSubtitleSize"`
+	DisableBorder         bool     `json:"disableBorder"`
+	LoginCardColor        string   `json:"loginCardColor"`
+	LoginTitleColor       string   `json:"loginTitleColor"`
+	LoginSubtitleColor    string   `json:"loginSubtitleColor"`
+	UsernameTextColor     string   `json:"usernameTextColor"`
+	PasswordTextColor     string   `json:"passwordTextColor"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`
 }
 

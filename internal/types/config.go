@@ -53,6 +53,12 @@ type Config struct {
 	LogoSize                string `mapstructure:"logo-size"`
 	LoginTitleSize          string `mapstructure:"login-title-size"`
 	LoginSubtitleSize       string `mapstructure:"login-subtitle-size"`
+	DisableBorder           bool   `mapstructure:"disable-border"`
+	LoginCardColor          string `mapstructure:"login-card-color"`
+	LoginTitleColor         string `mapstructure:"login-title-color"`
+	LoginSubtitleColor      string `mapstructure:"login-subtitle-color"`
+	UsernameTextColor       string `mapstructure:"username-text-color"`
+	PasswordTextColor       string `mapstructure:"password-text-color"`
 	LdapAddress             string `mapstructure:"ldap-address"`
 	LdapBindDN              string `mapstructure:"ldap-bind-dn"`
 	LdapBindPassword        string `mapstructure:"ldap-bind-password"`
@@ -81,6 +87,12 @@ type HandlersConfig struct {
 	LogoSize              string
 	LoginTitleSize        string
 	LoginSubtitleSize     string
+	DisableBorder         bool
+	LoginCardColor        string
+	LoginTitleColor       string
+	LoginSubtitleColor    string
+	UsernameTextColor     string
+	PasswordTextColor     string
 	OAuthAutoRedirect     string
 	CsrfCookieName        string
 	RedirectCookieName    string
