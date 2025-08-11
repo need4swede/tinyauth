@@ -25,6 +25,20 @@ export const appContextSchema = z.object({
   loginSubtitleColor: z.string().optional(),
   usernameTextColor: z.string().optional(),
   passwordTextColor: z.string().optional(),
+  googleButtonTextColor: z.string().optional(),
+  googleButtonBackgroundColor: z.string().optional(),
+  googleButtonHideIcon: z.boolean().optional(),
+  microsoftButtonTextColor: z.string().optional(),
+  microsoftButtonBackgroundColor: z.string().optional(),
+  microsoftButtonHideIcon: z.boolean().optional(),
+  githubButtonTextColor: z.string().optional(),
+  githubButtonBackgroundColor: z.string().optional(),
+  githubButtonHideIcon: z.boolean().optional(),
+  genericButtonTextColor: z.string().optional(),
+  genericButtonBackgroundColor: z.string().optional(),
+  genericButtonHideIcon: z.boolean().optional(),
+  loginButtonTextColor: z.string().optional(),
+  loginButtonBackgroundColor: z.string().optional(),
 });
 
 export type AppContextSchema = z.infer<typeof appContextSchema>;

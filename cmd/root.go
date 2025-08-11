@@ -116,6 +116,20 @@ var rootCmd = &cobra.Command{
 			LoginSubtitleColor:    config.LoginSubtitleColor,
 			UsernameTextColor:     config.UsernameTextColor,
 			PasswordTextColor:     config.PasswordTextColor,
+			GoogleButtonTextColor:      config.GoogleButtonTextColor,
+			GoogleButtonBackgroundColor: config.GoogleButtonBackgroundColor,
+			GoogleButtonHideIcon:       config.GoogleButtonHideIcon,
+			MicrosoftButtonTextColor:      config.MicrosoftButtonTextColor,
+			MicrosoftButtonBackgroundColor: config.MicrosoftButtonBackgroundColor,
+			MicrosoftButtonHideIcon:       config.MicrosoftButtonHideIcon,
+			GithubButtonTextColor:      config.GithubButtonTextColor,
+			GithubButtonBackgroundColor: config.GithubButtonBackgroundColor,
+			GithubButtonHideIcon:       config.GithubButtonHideIcon,
+			GenericButtonTextColor:      config.GenericButtonTextColor,
+			GenericButtonBackgroundColor: config.GenericButtonBackgroundColor,
+			GenericButtonHideIcon:       config.GenericButtonHideIcon,
+			LoginButtonTextColor:      config.LoginButtonTextColor,
+			LoginButtonBackgroundColor: config.LoginButtonBackgroundColor,
 			OAuthAutoRedirect:     config.OAuthAutoRedirect,
 			CsrfCookieName:        csrfCookieName,
 			RedirectCookieName:    redirectCookieName,
@@ -256,6 +270,20 @@ func init() {
 	rootCmd.Flags().String("login-subtitle-color", "", "Text color for the login subtitle (e.g., #666666).")
 	rootCmd.Flags().String("username-text-color", "", "Text color for the username field label (e.g., #333333).")
 	rootCmd.Flags().String("password-text-color", "", "Text color for the password field label (e.g., #333333).")
+	rootCmd.Flags().String("google-button-text-color", "", "Text color for the Google OAuth button (e.g., #ffffff).")
+	rootCmd.Flags().String("google-button-background-color", "", "Background color for the Google OAuth button (e.g., #4285f4).")
+	rootCmd.Flags().Bool("google-button-hide-icon", false, "Hide the icon in the Google OAuth button.")
+	rootCmd.Flags().String("microsoft-button-text-color", "", "Text color for the Microsoft OAuth button (e.g., #ffffff).")
+	rootCmd.Flags().String("microsoft-button-background-color", "", "Background color for the Microsoft OAuth button (e.g., #0078d4).")
+	rootCmd.Flags().Bool("microsoft-button-hide-icon", false, "Hide the icon in the Microsoft OAuth button.")
+	rootCmd.Flags().String("github-button-text-color", "", "Text color for the GitHub OAuth button (e.g., #ffffff).")
+	rootCmd.Flags().String("github-button-background-color", "", "Background color for the GitHub OAuth button (e.g., #333333).")
+	rootCmd.Flags().Bool("github-button-hide-icon", false, "Hide the icon in the GitHub OAuth button.")
+	rootCmd.Flags().String("generic-button-text-color", "", "Text color for the generic OAuth button (e.g., #ffffff).")
+	rootCmd.Flags().String("generic-button-background-color", "", "Background color for the generic OAuth button (e.g., #6c757d).")
+	rootCmd.Flags().Bool("generic-button-hide-icon", false, "Hide the icon in the generic OAuth button.")
+	rootCmd.Flags().String("login-button-text-color", "", "Text color for the login submit button (e.g., #ffffff).")
+	rootCmd.Flags().String("login-button-background-color", "", "Background color for the login submit button (e.g., #007bff).")
 	rootCmd.Flags().String("forgot-password-message", "", "Message to show on the forgot password page.")
 	rootCmd.Flags().String("background-image", "/background.jpg", "Background image URL for the login page.")
 	rootCmd.Flags().String("ldap-address", "", "LDAP server address (e.g. ldap://localhost:389).")
@@ -317,6 +345,20 @@ func init() {
 	viper.BindEnv("login-subtitle-color", "LOGIN_SUBTITLE_COLOR")
 	viper.BindEnv("username-text-color", "USERNAME_TEXT_COLOR")
 	viper.BindEnv("password-text-color", "PASSWORD_TEXT_COLOR")
+	viper.BindEnv("google-button-text-color", "GOOGLE_BUTTON_TEXT_COLOR")
+	viper.BindEnv("google-button-background-color", "GOOGLE_BUTTON_BACKGROUND_COLOR")
+	viper.BindEnv("google-button-hide-icon", "GOOGLE_BUTTON_HIDE_ICON")
+	viper.BindEnv("microsoft-button-text-color", "MICROSOFT_BUTTON_TEXT_COLOR")
+	viper.BindEnv("microsoft-button-background-color", "MICROSOFT_BUTTON_BACKGROUND_COLOR")
+	viper.BindEnv("microsoft-button-hide-icon", "MICROSOFT_BUTTON_HIDE_ICON")
+	viper.BindEnv("github-button-text-color", "GITHUB_BUTTON_TEXT_COLOR")
+	viper.BindEnv("github-button-background-color", "GITHUB_BUTTON_BACKGROUND_COLOR")
+	viper.BindEnv("github-button-hide-icon", "GITHUB_BUTTON_HIDE_ICON")
+	viper.BindEnv("generic-button-text-color", "GENERIC_BUTTON_TEXT_COLOR")
+	viper.BindEnv("generic-button-background-color", "GENERIC_BUTTON_BACKGROUND_COLOR")
+	viper.BindEnv("generic-button-hide-icon", "GENERIC_BUTTON_HIDE_ICON")
+	viper.BindEnv("login-button-text-color", "LOGIN_BUTTON_TEXT_COLOR")
+	viper.BindEnv("login-button-background-color", "LOGIN_BUTTON_BACKGROUND_COLOR")
 	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
 	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
 	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")

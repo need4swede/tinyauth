@@ -59,6 +59,20 @@ type Config struct {
 	LoginSubtitleColor      string `mapstructure:"login-subtitle-color"`
 	UsernameTextColor       string `mapstructure:"username-text-color"`
 	PasswordTextColor       string `mapstructure:"password-text-color"`
+	GoogleButtonTextColor      string `mapstructure:"google-button-text-color"`
+	GoogleButtonBackgroundColor string `mapstructure:"google-button-background-color"`
+	GoogleButtonHideIcon       bool   `mapstructure:"google-button-hide-icon"`
+	MicrosoftButtonTextColor      string `mapstructure:"microsoft-button-text-color"`
+	MicrosoftButtonBackgroundColor string `mapstructure:"microsoft-button-background-color"`
+	MicrosoftButtonHideIcon       bool   `mapstructure:"microsoft-button-hide-icon"`
+	GithubButtonTextColor      string `mapstructure:"github-button-text-color"`
+	GithubButtonBackgroundColor string `mapstructure:"github-button-background-color"`
+	GithubButtonHideIcon       bool   `mapstructure:"github-button-hide-icon"`
+	GenericButtonTextColor      string `mapstructure:"generic-button-text-color"`
+	GenericButtonBackgroundColor string `mapstructure:"generic-button-background-color"`
+	GenericButtonHideIcon       bool   `mapstructure:"generic-button-hide-icon"`
+	LoginButtonTextColor      string `mapstructure:"login-button-text-color"`
+	LoginButtonBackgroundColor string `mapstructure:"login-button-background-color"`
 	LdapAddress             string `mapstructure:"ldap-address"`
 	LdapBindDN              string `mapstructure:"ldap-bind-dn"`
 	LdapBindPassword        string `mapstructure:"ldap-bind-password"`
@@ -93,6 +107,20 @@ type HandlersConfig struct {
 	LoginSubtitleColor    string
 	UsernameTextColor     string
 	PasswordTextColor     string
+	GoogleButtonTextColor      string
+	GoogleButtonBackgroundColor string
+	GoogleButtonHideIcon       bool
+	MicrosoftButtonTextColor      string
+	MicrosoftButtonBackgroundColor string
+	MicrosoftButtonHideIcon       bool
+	GithubButtonTextColor      string
+	GithubButtonBackgroundColor string
+	GithubButtonHideIcon       bool
+	GenericButtonTextColor      string
+	GenericButtonBackgroundColor string
+	GenericButtonHideIcon       bool
+	LoginButtonTextColor      string
+	LoginButtonBackgroundColor string
 	OAuthAutoRedirect     string
 	CsrfCookieName        string
 	RedirectCookieName    string

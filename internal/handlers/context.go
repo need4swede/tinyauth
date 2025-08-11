@@ -123,6 +123,30 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	usernameTextColor := getDomainBranding(requestDomain, "USERNAME_TEXT_COLOR", h.Config.UsernameTextColor)
 	passwordTextColor := getDomainBranding(requestDomain, "PASSWORD_TEXT_COLOR", h.Config.PasswordTextColor)
 
+	// Get button customization branding
+	googleButtonTextColor := getDomainBranding(requestDomain, "GOOGLE_BUTTON_TEXT_COLOR", h.Config.GoogleButtonTextColor)
+	googleButtonBackgroundColor := getDomainBranding(requestDomain, "GOOGLE_BUTTON_BACKGROUND_COLOR", h.Config.GoogleButtonBackgroundColor)
+	googleButtonHideIconStr := getDomainBranding(requestDomain, "GOOGLE_BUTTON_HIDE_ICON", "")
+	googleButtonHideIcon := googleButtonHideIconStr == "true" || h.Config.GoogleButtonHideIcon
+
+	microsoftButtonTextColor := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_TEXT_COLOR", h.Config.MicrosoftButtonTextColor)
+	microsoftButtonBackgroundColor := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_BACKGROUND_COLOR", h.Config.MicrosoftButtonBackgroundColor)
+	microsoftButtonHideIconStr := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_HIDE_ICON", "")
+	microsoftButtonHideIcon := microsoftButtonHideIconStr == "true" || h.Config.MicrosoftButtonHideIcon
+
+	githubButtonTextColor := getDomainBranding(requestDomain, "GITHUB_BUTTON_TEXT_COLOR", h.Config.GithubButtonTextColor)
+	githubButtonBackgroundColor := getDomainBranding(requestDomain, "GITHUB_BUTTON_BACKGROUND_COLOR", h.Config.GithubButtonBackgroundColor)
+	githubButtonHideIconStr := getDomainBranding(requestDomain, "GITHUB_BUTTON_HIDE_ICON", "")
+	githubButtonHideIcon := githubButtonHideIconStr == "true" || h.Config.GithubButtonHideIcon
+
+	genericButtonTextColor := getDomainBranding(requestDomain, "GENERIC_BUTTON_TEXT_COLOR", h.Config.GenericButtonTextColor)
+	genericButtonBackgroundColor := getDomainBranding(requestDomain, "GENERIC_BUTTON_BACKGROUND_COLOR", h.Config.GenericButtonBackgroundColor)
+	genericButtonHideIconStr := getDomainBranding(requestDomain, "GENERIC_BUTTON_HIDE_ICON", "")
+	genericButtonHideIcon := genericButtonHideIconStr == "true" || h.Config.GenericButtonHideIcon
+
+	loginButtonTextColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_TEXT_COLOR", h.Config.LoginButtonTextColor)
+	loginButtonBackgroundColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_BACKGROUND_COLOR", h.Config.LoginButtonBackgroundColor)
+
 	// Log dynamic branding detection
 	if requestDomain != "" {
 		log.Debug().
@@ -160,6 +184,20 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LoginSubtitleColor:    loginSubtitleColor,
 		UsernameTextColor:     usernameTextColor,
 		PasswordTextColor:     passwordTextColor,
+		GoogleButtonTextColor:      googleButtonTextColor,
+		GoogleButtonBackgroundColor: googleButtonBackgroundColor,
+		GoogleButtonHideIcon:       googleButtonHideIcon,
+		MicrosoftButtonTextColor:      microsoftButtonTextColor,
+		MicrosoftButtonBackgroundColor: microsoftButtonBackgroundColor,
+		MicrosoftButtonHideIcon:       microsoftButtonHideIcon,
+		GithubButtonTextColor:      githubButtonTextColor,
+		GithubButtonBackgroundColor: githubButtonBackgroundColor,
+		GithubButtonHideIcon:       githubButtonHideIcon,
+		GenericButtonTextColor:      genericButtonTextColor,
+		GenericButtonBackgroundColor: genericButtonBackgroundColor,
+		GenericButtonHideIcon:       genericButtonHideIcon,
+		LoginButtonTextColor:      loginButtonTextColor,
+		LoginButtonBackgroundColor: loginButtonBackgroundColor,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)

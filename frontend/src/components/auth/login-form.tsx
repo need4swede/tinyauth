@@ -18,10 +18,12 @@ import z from "zod";
 interface Props {
   onSubmit: (data: LoginSchema) => void;
   loading?: boolean;
+  loginButtonTextColor?: string;
+  loginButtonBackgroundColor?: string;
 }
 
 export const LoginForm = (props: Props) => {
-  const { onSubmit, loading } = props;
+  const { onSubmit, loading, loginButtonTextColor, loginButtonBackgroundColor } = props;
   const { t } = useTranslation();
   const {
     usernameTitle,
@@ -103,7 +105,16 @@ export const LoginForm = (props: Props) => {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit" loading={loading}>
+        <Button
+          className="w-full"
+          type="submit"
+          loading={loading}
+          style={{
+            color: loginButtonTextColor || undefined,
+            backgroundColor: loginButtonBackgroundColor || undefined,
+            borderColor: loginButtonBackgroundColor || undefined,
+          }}
+        >
           {t("loginSubmit")}
         </Button>
       </form>

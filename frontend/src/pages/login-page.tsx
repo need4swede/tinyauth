@@ -44,7 +44,21 @@ export const LoginPage = () => {
     disableBorder,
     loginCardColor,
     loginTitleColor,
-    loginSubtitleColor
+    loginSubtitleColor,
+    googleButtonTextColor,
+    googleButtonBackgroundColor,
+    googleButtonHideIcon,
+    microsoftButtonTextColor,
+    microsoftButtonBackgroundColor,
+    microsoftButtonHideIcon,
+    githubButtonTextColor,
+    githubButtonBackgroundColor,
+    githubButtonHideIcon,
+    genericButtonTextColor,
+    genericButtonBackgroundColor,
+    genericButtonHideIcon,
+    loginButtonTextColor,
+    loginButtonBackgroundColor
   } = useAppContext();
   const { search } = useLocation();
   const { t } = useTranslation();
@@ -215,6 +229,9 @@ export const LoginPage = () => {
                 onClick={() => oauthMutation.mutate("google")}
                 loading={oauthMutation.isPending && oauthMutation.variables === "google"}
                 disabled={oauthMutation.isPending || loginMutation.isPending}
+                textColor={googleButtonTextColor}
+                backgroundColor={googleButtonBackgroundColor}
+                hideIcon={googleButtonHideIcon}
               />
             )}
             {configuredProviders.includes("microsoft") && (
@@ -225,6 +242,9 @@ export const LoginPage = () => {
                 onClick={() => oauthMutation.mutate("microsoft")}
                 loading={oauthMutation.isPending && oauthMutation.variables === "microsoft"}
                 disabled={oauthMutation.isPending || loginMutation.isPending}
+                textColor={microsoftButtonTextColor}
+                backgroundColor={microsoftButtonBackgroundColor}
+                hideIcon={microsoftButtonHideIcon}
               />
             )}
             {configuredProviders.includes("github") && (
@@ -235,6 +255,9 @@ export const LoginPage = () => {
                 onClick={() => oauthMutation.mutate("github")}
                 loading={oauthMutation.isPending && oauthMutation.variables === "github"}
                 disabled={oauthMutation.isPending || loginMutation.isPending}
+                textColor={githubButtonTextColor}
+                backgroundColor={githubButtonBackgroundColor}
+                hideIcon={githubButtonHideIcon}
               />
             )}
             {configuredProviders.includes("generic") && (
@@ -245,6 +268,9 @@ export const LoginPage = () => {
                 onClick={() => oauthMutation.mutate("generic")}
                 loading={oauthMutation.isPending && oauthMutation.variables === "generic"}
                 disabled={oauthMutation.isPending || loginMutation.isPending}
+                textColor={genericButtonTextColor}
+                backgroundColor={genericButtonBackgroundColor}
+                hideIcon={genericButtonHideIcon}
               />
             )}
           </div>
@@ -256,6 +282,8 @@ export const LoginPage = () => {
           <LoginForm
             onSubmit={(values) => loginMutation.mutate(values)}
             loading={loginMutation.isPending || oauthMutation.isPending}
+            loginButtonTextColor={loginButtonTextColor}
+            loginButtonBackgroundColor={loginButtonBackgroundColor}
           />
         )}
         {configuredProviders.length == 0 && (

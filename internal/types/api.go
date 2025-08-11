@@ -69,6 +69,20 @@ type AppContext struct {
 	LoginSubtitleColor    string   `json:"loginSubtitleColor"`
 	UsernameTextColor     string   `json:"usernameTextColor"`
 	PasswordTextColor     string   `json:"passwordTextColor"`
+	GoogleButtonTextColor      string `json:"googleButtonTextColor"`
+	GoogleButtonBackgroundColor string `json:"googleButtonBackgroundColor"`
+	GoogleButtonHideIcon       bool   `json:"googleButtonHideIcon"`
+	MicrosoftButtonTextColor      string `json:"microsoftButtonTextColor"`
+	MicrosoftButtonBackgroundColor string `json:"microsoftButtonBackgroundColor"`
+	MicrosoftButtonHideIcon       bool   `json:"microsoftButtonHideIcon"`
+	GithubButtonTextColor      string `json:"githubButtonTextColor"`
+	GithubButtonBackgroundColor string `json:"githubButtonBackgroundColor"`
+	GithubButtonHideIcon       bool   `json:"githubButtonHideIcon"`
+	GenericButtonTextColor      string `json:"genericButtonTextColor"`
+	GenericButtonBackgroundColor string `json:"genericButtonBackgroundColor"`
+	GenericButtonHideIcon       bool   `json:"genericButtonHideIcon"`
+	LoginButtonTextColor      string `json:"loginButtonTextColor"`
+	LoginButtonBackgroundColor string `json:"loginButtonBackgroundColor"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`
 }
 
