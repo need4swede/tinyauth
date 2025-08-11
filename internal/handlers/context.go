@@ -110,6 +110,8 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	usernamePlaceholder := getDomainBranding(requestDomain, "USERNAME_PLACEHOLDER", h.Config.UsernamePlaceholder)
 	passwordPlaceholder := getDomainBranding(requestDomain, "PASSWORD_PLACEHOLDER", h.Config.PasswordPlaceholder)
 	forgotPasswordMessage := getDomainBranding(requestDomain, "FORGOT_PASSWORD_MESSAGE", h.Config.ForgotPasswordMessage)
+	loginTitleSize := getDomainBranding(requestDomain, "LOGIN_TITLE_SIZE", h.Config.LoginTitleSize)
+	loginSubtitleSize := getDomainBranding(requestDomain, "LOGIN_SUBTITLE_SIZE", h.Config.LoginSubtitleSize)
 
 	// Log dynamic branding detection
 	if requestDomain != "" {
@@ -139,6 +141,8 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		UsernamePlaceholder:   usernamePlaceholder,
 		PasswordPlaceholder:   passwordPlaceholder,
 		Logo:                  logo,
+		LoginTitleSize:        loginTitleSize,
+		LoginSubtitleSize:     loginSubtitleSize,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)

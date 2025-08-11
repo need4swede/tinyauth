@@ -37,7 +37,9 @@ export const LoginPage = () => {
     genericName,
     loginTitle,
     loginSubtitle,
-    logo
+    logo,
+    loginTitleSize,
+    loginSubtitleSize
   } = useAppContext();
   const { search } = useLocation();
   const { t } = useTranslation();
@@ -131,14 +133,41 @@ export const LoginPage = () => {
             />
           </div>
         )}
-        <CardTitle className="text-center text-3xl">
-          {loginTitle || title}
-        </CardTitle>
-        {configuredProviders.length > 0 && (
-          <CardDescription className="text-center">
-            {loginSubtitle || (oauthConfigured ? t("loginTitle") : t("loginTitleSimple"))}
-          </CardDescription>
-        )}
+        {(() => {
+          const sizeMap = {
+            sm: "text-sm",
+            md: "text-md",
+            lg: "text-lg",
+            xl: "text-xl",
+            "2xl": "text-2xl",
+            "3xl": "text-3xl",
+            "4xl": "text-4xl",
+          };
+          const titleSize = (loginTitleSize && loginTitleSize in sizeMap ? loginTitleSize : "3xl") as keyof typeof sizeMap;
+          return (
+            <CardTitle className={`text-center ${sizeMap[titleSize] || "text-3xl"}`}>
+              {loginTitle || title}
+            </CardTitle>
+          );
+        })()}
+        {configuredProviders.length > 0 &&
+          (() => {
+            const sizeMap = {
+              sm: "text-sm",
+              md: "text-md",
+              lg: "text-lg",
+              xl: "text-xl",
+              "2xl": "text-2xl",
+              "3xl": "text-3xl",
+              "4xl": "text-4xl",
+            };
+            const subtitleSize = (loginSubtitleSize && loginSubtitleSize in sizeMap ? loginSubtitleSize : "lg") as keyof typeof sizeMap;
+            return (
+              <CardDescription className={`text-center ${sizeMap[subtitleSize] || "text-lg"}`}>
+                {loginSubtitle || (oauthConfigured ? t("loginTitle") : t("loginTitleSimple"))}
+              </CardDescription>
+            );
+          })()}
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         {oauthConfigured && (

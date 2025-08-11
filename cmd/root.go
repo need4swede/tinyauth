@@ -107,6 +107,8 @@ var rootCmd = &cobra.Command{
 			UsernamePlaceholder:   config.UsernamePlaceholder,
 			PasswordPlaceholder:   config.PasswordPlaceholder,
 			Logo:                  config.Logo,
+			LoginTitleSize:        config.LoginTitleSize,
+			LoginSubtitleSize:     config.LoginSubtitleSize,
 			OAuthAutoRedirect:     config.OAuthAutoRedirect,
 			CsrfCookieName:        csrfCookieName,
 			RedirectCookieName:    redirectCookieName,
@@ -238,6 +240,8 @@ func init() {
 	rootCmd.Flags().String("username-placeholder", "", "Custom placeholder for the username field.")
 	rootCmd.Flags().String("password-placeholder", "", "Custom placeholder for the password field.")
 	rootCmd.Flags().String("logo", "", "Logo URL to display above the login title.")
+	rootCmd.Flags().String("login-title-size", "", "Font size for the login title (sm, md, lg, xl, 2xl, 3xl, 4xl).")
+	rootCmd.Flags().String("login-subtitle-size", "", "Font size for the login subtitle (sm, md, lg, xl, 2xl, 3xl, 4xl).")
 	rootCmd.Flags().String("forgot-password-message", "", "Message to show on the forgot password page.")
 	rootCmd.Flags().String("background-image", "/background.jpg", "Background image URL for the login page.")
 	rootCmd.Flags().String("ldap-address", "", "LDAP server address (e.g. ldap://localhost:389).")
@@ -290,6 +294,8 @@ func init() {
 	viper.BindEnv("username-placeholder", "USERNAME_PLACEHOLDER")
 	viper.BindEnv("password-placeholder", "PASSWORD_PLACEHOLDER")
 	viper.BindEnv("logo", "LOGO")
+	viper.BindEnv("login-title-size", "LOGIN_TITLE_SIZE")
+	viper.BindEnv("login-subtitle-size", "LOGIN_SUBTITLE_SIZE")
 	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
 	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
 	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")
