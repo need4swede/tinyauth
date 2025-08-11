@@ -154,6 +154,9 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	loginButtonTextColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_TEXT_COLOR", h.Config.LoginButtonTextColor)
 	loginButtonBackgroundColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_BACKGROUND_COLOR", h.Config.LoginButtonBackgroundColor)
 
+	// Get favicon branding
+	favicon := getDomainBranding(requestDomain, "FAVICON", h.Config.Favicon)
+
 	// Log dynamic branding detection
 	if requestDomain != "" {
 		log.Debug().
@@ -211,6 +214,7 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LoginButtonTextColor:      loginButtonTextColor,
 		LoginButtonBackgroundColor: loginButtonBackgroundColor,
 		DisableLanguageSelector:   disableLanguageSelector,
+		Favicon:               favicon,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)
