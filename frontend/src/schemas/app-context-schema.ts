@@ -44,6 +44,7 @@ export const appContextSchema = z.object({
   loginButtonText: z.string().optional(),
   loginButtonTextColor: z.string().optional(),
   loginButtonBackgroundColor: z.string().optional(),
+  disableLanguageSelector: z.boolean().optional(),
 });
 
 export type AppContextSchema = z.infer<typeof appContextSchema>;

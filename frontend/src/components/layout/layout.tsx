@@ -3,7 +3,7 @@ import { LanguageSelector } from "../language/language";
 import { Outlet } from "react-router";
 
 export const Layout = () => {
-  const { backgroundImage } = useAppContext();
+  const { backgroundImage, disableLanguageSelector } = useAppContext();
 
   return (
     <div
@@ -14,7 +14,7 @@ export const Layout = () => {
         backgroundPosition: "center",
       }}
     >
-      <LanguageSelector />
+      {!disableLanguageSelector && <LanguageSelector />}
       <Outlet />
     </div>
   );

@@ -88,6 +88,7 @@ type AppContext struct {
 	LoginButtonText           string `json:"loginButtonText"`
 	LoginButtonTextColor      string `json:"loginButtonTextColor"`
 	LoginButtonBackgroundColor string `json:"loginButtonBackgroundColor"`
+	DisableLanguageSelector   bool   `json:"disableLanguageSelector"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`
 }
 

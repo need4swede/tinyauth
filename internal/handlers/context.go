@@ -117,6 +117,8 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	// Get customization branding
 	disableBorderStr := getDomainBranding(requestDomain, "DISABLE_BORDER", "")
 	disableBorder := disableBorderStr == "true" || h.Config.DisableBorder
+	disableLanguageSelectorStr := getDomainBranding(requestDomain, "DISABLE_LANGUAGE_SELECTOR", "")
+	disableLanguageSelector := disableLanguageSelectorStr == "true" || h.Config.DisableLanguageSelector
 	loginCardColor := getDomainBranding(requestDomain, "LOGIN_CARD_COLOR", h.Config.LoginCardColor)
 	loginTitleColor := getDomainBranding(requestDomain, "LOGIN_TITLE_COLOR", h.Config.LoginTitleColor)
 	loginSubtitleColor := getDomainBranding(requestDomain, "LOGIN_SUBTITLE_COLOR", h.Config.LoginSubtitleColor)
@@ -208,6 +210,7 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LoginButtonText:           loginButtonText,
 		LoginButtonTextColor:      loginButtonTextColor,
 		LoginButtonBackgroundColor: loginButtonBackgroundColor,
+		DisableLanguageSelector:   disableLanguageSelector,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)
