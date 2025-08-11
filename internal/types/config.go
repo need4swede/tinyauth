@@ -59,18 +59,23 @@ type Config struct {
 	LoginSubtitleColor      string `mapstructure:"login-subtitle-color"`
 	UsernameTextColor       string `mapstructure:"username-text-color"`
 	PasswordTextColor       string `mapstructure:"password-text-color"`
+	GoogleButtonText           string `mapstructure:"google-button-text"`
 	GoogleButtonTextColor      string `mapstructure:"google-button-text-color"`
 	GoogleButtonBackgroundColor string `mapstructure:"google-button-background-color"`
 	GoogleButtonHideIcon       bool   `mapstructure:"google-button-hide-icon"`
+	MicrosoftButtonText           string `mapstructure:"microsoft-button-text"`
 	MicrosoftButtonTextColor      string `mapstructure:"microsoft-button-text-color"`
 	MicrosoftButtonBackgroundColor string `mapstructure:"microsoft-button-background-color"`
 	MicrosoftButtonHideIcon       bool   `mapstructure:"microsoft-button-hide-icon"`
+	GithubButtonText           string `mapstructure:"github-button-text"`
 	GithubButtonTextColor      string `mapstructure:"github-button-text-color"`
 	GithubButtonBackgroundColor string `mapstructure:"github-button-background-color"`
 	GithubButtonHideIcon       bool   `mapstructure:"github-button-hide-icon"`
+	GenericButtonText           string `mapstructure:"generic-button-text"`
 	GenericButtonTextColor      string `mapstructure:"generic-button-text-color"`
 	GenericButtonBackgroundColor string `mapstructure:"generic-button-background-color"`
 	GenericButtonHideIcon       bool   `mapstructure:"generic-button-hide-icon"`
+	LoginButtonText           string `mapstructure:"login-button-text"`
 	LoginButtonTextColor      string `mapstructure:"login-button-text-color"`
 	LoginButtonBackgroundColor string `mapstructure:"login-button-background-color"`
 	LdapAddress             string `mapstructure:"ldap-address"`
@@ -107,18 +112,23 @@ type HandlersConfig struct {
 	LoginSubtitleColor    string
 	UsernameTextColor     string
 	PasswordTextColor     string
+	GoogleButtonText           string
 	GoogleButtonTextColor      string
 	GoogleButtonBackgroundColor string
 	GoogleButtonHideIcon       bool
+	MicrosoftButtonText           string
 	MicrosoftButtonTextColor      string
 	MicrosoftButtonBackgroundColor string
 	MicrosoftButtonHideIcon       bool
+	GithubButtonText           string
 	GithubButtonTextColor      string
 	GithubButtonBackgroundColor string
 	GithubButtonHideIcon       bool
+	GenericButtonText           string
 	GenericButtonTextColor      string
 	GenericButtonBackgroundColor string
 	GenericButtonHideIcon       bool
+	LoginButtonText           string
 	LoginButtonTextColor      string
 	LoginButtonBackgroundColor string
 	OAuthAutoRedirect     string

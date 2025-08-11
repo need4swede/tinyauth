@@ -18,12 +18,13 @@ import z from "zod";
 interface Props {
   onSubmit: (data: LoginSchema) => void;
   loading?: boolean;
+  loginButtonText?: string;
   loginButtonTextColor?: string;
   loginButtonBackgroundColor?: string;
 }
 
 export const LoginForm = (props: Props) => {
-  const { onSubmit, loading, loginButtonTextColor, loginButtonBackgroundColor } = props;
+  const { onSubmit, loading, loginButtonText, loginButtonTextColor, loginButtonBackgroundColor } = props;
   const { t } = useTranslation();
   const {
     usernameTitle,
@@ -115,7 +116,7 @@ export const LoginForm = (props: Props) => {
             borderColor: loginButtonBackgroundColor || undefined,
           }}
         >
-          {t("loginSubmit")}
+          {loginButtonText || t("loginSubmit")}
         </Button>
       </form>
     </Form>

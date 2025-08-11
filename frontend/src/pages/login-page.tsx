@@ -45,18 +45,23 @@ export const LoginPage = () => {
     loginCardColor,
     loginTitleColor,
     loginSubtitleColor,
+    googleButtonText,
     googleButtonTextColor,
     googleButtonBackgroundColor,
     googleButtonHideIcon,
+    microsoftButtonText,
     microsoftButtonTextColor,
     microsoftButtonBackgroundColor,
     microsoftButtonHideIcon,
+    githubButtonText,
     githubButtonTextColor,
     githubButtonBackgroundColor,
     githubButtonHideIcon,
+    genericButtonText,
     genericButtonTextColor,
     genericButtonBackgroundColor,
     genericButtonHideIcon,
+    loginButtonText,
     loginButtonTextColor,
     loginButtonBackgroundColor
   } = useAppContext();
@@ -223,7 +228,7 @@ export const LoginPage = () => {
           <div className="flex flex-col gap-2 items-center justify-center">
             {configuredProviders.includes("google") && (
               <OAuthButton
-                title="Google"
+                title={googleButtonText || "Google"}
                 icon={<GoogleIcon />}
                 className="w-full"
                 onClick={() => oauthMutation.mutate("google")}
@@ -236,7 +241,7 @@ export const LoginPage = () => {
             )}
             {configuredProviders.includes("microsoft") && (
               <OAuthButton
-                title="Microsoft"
+                title={microsoftButtonText || "Microsoft"}
                 icon={<MicrosoftIcon />}
                 className="w-full"
                 onClick={() => oauthMutation.mutate("microsoft")}
@@ -249,7 +254,7 @@ export const LoginPage = () => {
             )}
             {configuredProviders.includes("github") && (
               <OAuthButton
-                title="Github"
+                title={githubButtonText || "Github"}
                 icon={<GithubIcon />}
                 className="w-full"
                 onClick={() => oauthMutation.mutate("github")}
@@ -262,7 +267,7 @@ export const LoginPage = () => {
             )}
             {configuredProviders.includes("generic") && (
               <OAuthButton
-                title={genericName}
+                title={genericButtonText || genericName}
                 icon={<GenericIcon />}
                 className="w-full"
                 onClick={() => oauthMutation.mutate("generic")}
@@ -282,6 +287,7 @@ export const LoginPage = () => {
           <LoginForm
             onSubmit={(values) => loginMutation.mutate(values)}
             loading={loginMutation.isPending || oauthMutation.isPending}
+            loginButtonText={loginButtonText}
             loginButtonTextColor={loginButtonTextColor}
             loginButtonBackgroundColor={loginButtonBackgroundColor}
           />

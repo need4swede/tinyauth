@@ -124,26 +124,31 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	passwordTextColor := getDomainBranding(requestDomain, "PASSWORD_TEXT_COLOR", h.Config.PasswordTextColor)
 
 	// Get button customization branding
+	googleButtonText := getDomainBranding(requestDomain, "GOOGLE_BUTTON_TEXT", h.Config.GoogleButtonText)
 	googleButtonTextColor := getDomainBranding(requestDomain, "GOOGLE_BUTTON_TEXT_COLOR", h.Config.GoogleButtonTextColor)
 	googleButtonBackgroundColor := getDomainBranding(requestDomain, "GOOGLE_BUTTON_BACKGROUND_COLOR", h.Config.GoogleButtonBackgroundColor)
 	googleButtonHideIconStr := getDomainBranding(requestDomain, "GOOGLE_BUTTON_HIDE_ICON", "")
 	googleButtonHideIcon := googleButtonHideIconStr == "true" || h.Config.GoogleButtonHideIcon
 
+	microsoftButtonText := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_TEXT", h.Config.MicrosoftButtonText)
 	microsoftButtonTextColor := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_TEXT_COLOR", h.Config.MicrosoftButtonTextColor)
 	microsoftButtonBackgroundColor := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_BACKGROUND_COLOR", h.Config.MicrosoftButtonBackgroundColor)
 	microsoftButtonHideIconStr := getDomainBranding(requestDomain, "MICROSOFT_BUTTON_HIDE_ICON", "")
 	microsoftButtonHideIcon := microsoftButtonHideIconStr == "true" || h.Config.MicrosoftButtonHideIcon
 
+	githubButtonText := getDomainBranding(requestDomain, "GITHUB_BUTTON_TEXT", h.Config.GithubButtonText)
 	githubButtonTextColor := getDomainBranding(requestDomain, "GITHUB_BUTTON_TEXT_COLOR", h.Config.GithubButtonTextColor)
 	githubButtonBackgroundColor := getDomainBranding(requestDomain, "GITHUB_BUTTON_BACKGROUND_COLOR", h.Config.GithubButtonBackgroundColor)
 	githubButtonHideIconStr := getDomainBranding(requestDomain, "GITHUB_BUTTON_HIDE_ICON", "")
 	githubButtonHideIcon := githubButtonHideIconStr == "true" || h.Config.GithubButtonHideIcon
 
+	genericButtonText := getDomainBranding(requestDomain, "GENERIC_BUTTON_TEXT", h.Config.GenericButtonText)
 	genericButtonTextColor := getDomainBranding(requestDomain, "GENERIC_BUTTON_TEXT_COLOR", h.Config.GenericButtonTextColor)
 	genericButtonBackgroundColor := getDomainBranding(requestDomain, "GENERIC_BUTTON_BACKGROUND_COLOR", h.Config.GenericButtonBackgroundColor)
 	genericButtonHideIconStr := getDomainBranding(requestDomain, "GENERIC_BUTTON_HIDE_ICON", "")
 	genericButtonHideIcon := genericButtonHideIconStr == "true" || h.Config.GenericButtonHideIcon
 
+	loginButtonText := getDomainBranding(requestDomain, "LOGIN_BUTTON_TEXT", h.Config.LoginButtonText)
 	loginButtonTextColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_TEXT_COLOR", h.Config.LoginButtonTextColor)
 	loginButtonBackgroundColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_BACKGROUND_COLOR", h.Config.LoginButtonBackgroundColor)
 
@@ -184,18 +189,23 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LoginSubtitleColor:    loginSubtitleColor,
 		UsernameTextColor:     usernameTextColor,
 		PasswordTextColor:     passwordTextColor,
+		GoogleButtonText:           googleButtonText,
 		GoogleButtonTextColor:      googleButtonTextColor,
 		GoogleButtonBackgroundColor: googleButtonBackgroundColor,
 		GoogleButtonHideIcon:       googleButtonHideIcon,
+		MicrosoftButtonText:           microsoftButtonText,
 		MicrosoftButtonTextColor:      microsoftButtonTextColor,
 		MicrosoftButtonBackgroundColor: microsoftButtonBackgroundColor,
 		MicrosoftButtonHideIcon:       microsoftButtonHideIcon,
+		GithubButtonText:           githubButtonText,
 		GithubButtonTextColor:      githubButtonTextColor,
 		GithubButtonBackgroundColor: githubButtonBackgroundColor,
 		GithubButtonHideIcon:       githubButtonHideIcon,
+		GenericButtonText:           genericButtonText,
 		GenericButtonTextColor:      genericButtonTextColor,
 		GenericButtonBackgroundColor: genericButtonBackgroundColor,
 		GenericButtonHideIcon:       genericButtonHideIcon,
+		LoginButtonText:           loginButtonText,
 		LoginButtonTextColor:      loginButtonTextColor,
 		LoginButtonBackgroundColor: loginButtonBackgroundColor,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
