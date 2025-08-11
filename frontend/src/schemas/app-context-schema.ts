@@ -16,6 +16,7 @@ export const appContextSchema = z.object({
   usernamePlaceholder: z.string().optional(),
   passwordPlaceholder: z.string().optional(),
   logo: z.string().optional(),
+  logoSize: z.string().optional(),
   loginTitleSize: z.string().optional(),
   loginSubtitleSize: z.string().optional(),
 });

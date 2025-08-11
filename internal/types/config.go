@@ -50,6 +50,7 @@ type Config struct {
 	UsernamePlaceholder     string `mapstructure:"username-placeholder"`
 	PasswordPlaceholder     string `mapstructure:"password-placeholder"`
 	Logo                    string `mapstructure:"logo"`
+	LogoSize                string `mapstructure:"logo-size"`
 	LoginTitleSize          string `mapstructure:"login-title-size"`
 	LoginSubtitleSize       string `mapstructure:"login-subtitle-size"`
 	LdapAddress             string `mapstructure:"ldap-address"`
@@ -77,6 +78,7 @@ type HandlersConfig struct {
 	UsernamePlaceholder   string
 	PasswordPlaceholder   string
 	Logo                  string
+	LogoSize              string
 	LoginTitleSize        string
 	LoginSubtitleSize     string
 	OAuthAutoRedirect     string

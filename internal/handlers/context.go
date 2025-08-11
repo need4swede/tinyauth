@@ -104,6 +104,7 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	loginTitle := getDomainBranding(requestDomain, "LOGIN_TITLE", h.Config.LoginTitle)
 	loginSubtitle := getDomainBranding(requestDomain, "LOGIN_SUBTITLE", h.Config.LoginSubtitle)
 	logo := getDomainBranding(requestDomain, "LOGO", h.Config.Logo)
+	logoSize := getDomainBranding(requestDomain, "LOGO_SIZE", h.Config.LogoSize)
 	backgroundImage := getDomainBranding(requestDomain, "BACKGROUND", h.Config.BackgroundImage)
 	usernameTitle := getDomainBranding(requestDomain, "USERNAME_TITLE", h.Config.UsernameTitle)
 	passwordTitle := getDomainBranding(requestDomain, "PASSWORD_TITLE", h.Config.PasswordTitle)
@@ -141,6 +142,7 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		UsernamePlaceholder:   usernamePlaceholder,
 		PasswordPlaceholder:   passwordPlaceholder,
 		Logo:                  logo,
+		LogoSize:              logoSize,
 		LoginTitleSize:        loginTitleSize,
 		LoginSubtitleSize:     loginSubtitleSize,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,

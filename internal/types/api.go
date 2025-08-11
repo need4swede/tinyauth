@@ -60,6 +60,7 @@ type AppContext struct {
 	UsernamePlaceholder   string   `json:"usernamePlaceholder"`
 	PasswordPlaceholder   string   `json:"passwordPlaceholder"`
 	Logo                  string   `json:"logo"`
+	LogoSize              string   `json:"logoSize"`
 	LoginTitleSize        string   `json:"loginTitleSize"`
 	LoginSubtitleSize     string   `json:"loginSubtitleSize"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`

@@ -38,6 +38,7 @@ export const LoginPage = () => {
     loginTitle,
     loginSubtitle,
     logo,
+    logoSize,
     loginTitleSize,
     loginSubtitleSize
   } = useAppContext();
@@ -123,14 +124,29 @@ export const LoginPage = () => {
       <CardHeader>
         {logo && (
           <div className="flex justify-center mb-4">
-            <img
-              src={logo}
-              alt="Logo"
-              className="h-16 w-auto object-contain"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+            {(() => {
+              const sizeMap = {
+                xs: "h-8",
+                sm: "h-12",
+                md: "h-16",
+                lg: "h-20",
+                xl: "h-24",
+                "2xl": "h-32",
+                "3xl": "h-40",
+                "4xl": "h-48",
+              };
+              const size = (logoSize && logoSize in sizeMap ? logoSize : "md") as keyof typeof sizeMap;
+              return (
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className={`${sizeMap[size] || "h-16"} w-auto object-contain`}
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              );
+            })()}
           </div>
         )}
         {(() => {
