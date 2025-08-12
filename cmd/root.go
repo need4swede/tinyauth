@@ -138,6 +138,11 @@ var rootCmd = &cobra.Command{
 			DisableLanguageSelector:   config.DisableLanguageSelector,
 			Favicon:               config.Favicon,
 			BackgroundColor:       config.BackgroundColor,
+			FooterButtonText:        config.FooterButtonText,
+			FooterButtonUrl:         config.FooterButtonUrl,
+			FooterButtonNewTab:      config.FooterButtonNewTab,
+			FooterButtonTextColor:   config.FooterButtonTextColor,
+			FooterButtonBackgroundColor: config.FooterButtonBackgroundColor,
 			OAuthAutoRedirect:     config.OAuthAutoRedirect,
 			CsrfCookieName:        csrfCookieName,
 			RedirectCookieName:    redirectCookieName,
@@ -300,6 +305,11 @@ func init() {
 	rootCmd.Flags().Bool("disable-language-selector", false, "Disable the language selector on the login page.")
 	rootCmd.Flags().String("favicon", "", "Custom favicon URL for the application.")
 	rootCmd.Flags().String("background-color", "", "Background color for the application (e.g., #000000 or oklch(14.5% 0 0)).")
+	rootCmd.Flags().String("footer-button-text", "", "Text for the footer button (e.g., 'Need help? Contact us').")
+	rootCmd.Flags().String("footer-button-url", "", "URL for the footer button (e.g., mailto:support@example.com or https://help.example.com).")
+	rootCmd.Flags().Bool("footer-button-new-tab", false, "Open footer button URL in a new tab.")
+	rootCmd.Flags().String("footer-button-text-color", "", "Text color for the footer button (e.g., #ffffff).")
+	rootCmd.Flags().String("footer-button-background-color", "", "Background color for the footer button (e.g., #007bff).")
 	rootCmd.Flags().String("forgot-password-message", "", "Message to show on the forgot password page.")
 	rootCmd.Flags().String("background-image", "/background.jpg", "Background image URL for the login page.")
 	rootCmd.Flags().String("ldap-address", "", "LDAP server address (e.g. ldap://localhost:389).")
@@ -383,6 +393,11 @@ func init() {
 	viper.BindEnv("disable-language-selector", "DISABLE_LANGUAGE_SELECTOR")
 	viper.BindEnv("favicon", "FAVICON")
 	viper.BindEnv("background-color", "BACKGROUND_COLOR")
+	viper.BindEnv("footer-button-text", "FOOTER_BUTTON_TEXT")
+	viper.BindEnv("footer-button-url", "FOOTER_BUTTON_URL")
+	viper.BindEnv("footer-button-new-tab", "FOOTER_BUTTON_NEW_TAB")
+	viper.BindEnv("footer-button-text-color", "FOOTER_BUTTON_TEXT_COLOR")
+	viper.BindEnv("footer-button-background-color", "FOOTER_BUTTON_BACKGROUND_COLOR")
 	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
 	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
 	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")

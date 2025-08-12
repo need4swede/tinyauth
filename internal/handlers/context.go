@@ -154,9 +154,15 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	loginButtonTextColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_TEXT_COLOR", h.Config.LoginButtonTextColor)
 	loginButtonBackgroundColor := getDomainBranding(requestDomain, "LOGIN_BUTTON_BACKGROUND_COLOR", h.Config.LoginButtonBackgroundColor)
 
-	// Get favicon and background color branding
+	// Get favicon, background color, and footer button branding
 	favicon := getDomainBranding(requestDomain, "FAVICON", h.Config.Favicon)
 	backgroundColor := getDomainBranding(requestDomain, "BACKGROUND_COLOR", h.Config.BackgroundColor)
+	footerButtonText := getDomainBranding(requestDomain, "FOOTER_BUTTON_TEXT", h.Config.FooterButtonText)
+	footerButtonUrl := getDomainBranding(requestDomain, "FOOTER_BUTTON_URL", h.Config.FooterButtonUrl)
+	footerButtonNewTabStr := getDomainBranding(requestDomain, "FOOTER_BUTTON_NEW_TAB", "")
+	footerButtonNewTab := footerButtonNewTabStr == "true" || h.Config.FooterButtonNewTab
+	footerButtonTextColor := getDomainBranding(requestDomain, "FOOTER_BUTTON_TEXT_COLOR", h.Config.FooterButtonTextColor)
+	footerButtonBackgroundColor := getDomainBranding(requestDomain, "FOOTER_BUTTON_BACKGROUND_COLOR", h.Config.FooterButtonBackgroundColor)
 
 	// Log dynamic branding detection
 	if requestDomain != "" {
@@ -217,6 +223,11 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		DisableLanguageSelector:   disableLanguageSelector,
 		Favicon:               favicon,
 		BackgroundColor:       backgroundColor,
+		FooterButtonText:        footerButtonText,
+		FooterButtonUrl:         footerButtonUrl,
+		FooterButtonNewTab:      footerButtonNewTab,
+		FooterButtonTextColor:   footerButtonTextColor,
+		FooterButtonBackgroundColor: footerButtonBackgroundColor,
 		OAuthAutoRedirect:     h.Config.OAuthAutoRedirect,
 	}
 	c.JSON(200, appContext)

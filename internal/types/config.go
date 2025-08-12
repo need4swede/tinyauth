@@ -81,6 +81,11 @@ type Config struct {
 	DisableLanguageSelector bool   `mapstructure:"disable-language-selector"`
 	Favicon                 string `mapstructure:"favicon"`
 	BackgroundColor         string `mapstructure:"background-color"`
+	FooterButtonText        string `mapstructure:"footer-button-text"`
+	FooterButtonUrl         string `mapstructure:"footer-button-url"`
+	FooterButtonNewTab      bool   `mapstructure:"footer-button-new-tab"`
+	FooterButtonTextColor   string `mapstructure:"footer-button-text-color"`
+	FooterButtonBackgroundColor string `mapstructure:"footer-button-background-color"`
 	LdapAddress             string `mapstructure:"ldap-address"`
 	LdapBindDN              string `mapstructure:"ldap-bind-dn"`
 	LdapBindPassword        string `mapstructure:"ldap-bind-password"`
@@ -137,6 +142,11 @@ type HandlersConfig struct {
 	DisableLanguageSelector   bool
 	Favicon               string
 	BackgroundColor       string
+	FooterButtonText        string
+	FooterButtonUrl         string
+	FooterButtonNewTab      bool
+	FooterButtonTextColor   string
+	FooterButtonBackgroundColor string
 	OAuthAutoRedirect     string
 	CsrfCookieName        string
 	RedirectCookieName    string

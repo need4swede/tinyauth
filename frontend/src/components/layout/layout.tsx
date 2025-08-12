@@ -1,5 +1,6 @@
 import { useAppContext } from "@/context/app-context";
 import { LanguageSelector } from "../language/language";
+import { FooterButton } from "../ui/footer-button";
 import { Outlet } from "react-router";
 
 export const Layout = () => {
@@ -17,6 +18,7 @@ export const Layout = () => {
     >
       {!disableLanguageSelector && <LanguageSelector />}
       <Outlet />
+      <FooterButton />
     </div>
   );
 };

@@ -47,6 +47,11 @@ export const appContextSchema = z.object({
   disableLanguageSelector: z.boolean().optional(),
   favicon: z.string().optional(),
   backgroundColor: z.string().optional(),
+  footerButtonText: z.string().optional(),
+  footerButtonUrl: z.string().optional(),
+  footerButtonNewTab: z.boolean().optional(),
+  footerButtonTextColor: z.string().optional(),
+  footerButtonBackgroundColor: z.string().optional(),
 });
 
 export type AppContextSchema = z.infer<typeof appContextSchema>;

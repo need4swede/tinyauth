@@ -91,6 +91,11 @@ type AppContext struct {
 	DisableLanguageSelector   bool   `json:"disableLanguageSelector"`
 	Favicon               string `json:"favicon"`
 	BackgroundColor       string `json:"backgroundColor"`
+	FooterButtonText        string `json:"footerButtonText"`
+	FooterButtonUrl         string `json:"footerButtonUrl"`
+	FooterButtonNewTab      bool   `json:"footerButtonNewTab"`
+	FooterButtonTextColor   string `json:"footerButtonTextColor"`
+	FooterButtonBackgroundColor string `json:"footerButtonBackgroundColor"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`
 }
 
