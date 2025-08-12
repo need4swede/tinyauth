@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppContext } from "@/context/app-context";
 
 export const DynamicHead = () => {
-  const { title, favicon } = useAppContext();
+  const { title, favicon, backgroundColor } = useAppContext();
 
   useEffect(() => {
     // Update document title
@@ -29,6 +29,17 @@ export const DynamicHead = () => {
       }
     }
   }, [favicon]);
+
+  useEffect(() => {
+    // Update background color
+    if (backgroundColor) {
+      // Set the CSS custom property --background on the document root
+      document.documentElement.style.setProperty('--background', backgroundColor);
+    } else {
+      // Remove the custom property if no background color is set
+      document.documentElement.style.removeProperty('--background');
+    }
+  }, [backgroundColor]);
 
   // This component doesn't render anything visible
   return null;

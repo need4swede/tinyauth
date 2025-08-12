@@ -137,6 +137,7 @@ var rootCmd = &cobra.Command{
 			LoginButtonBackgroundColor: config.LoginButtonBackgroundColor,
 			DisableLanguageSelector:   config.DisableLanguageSelector,
 			Favicon:               config.Favicon,
+			BackgroundColor:       config.BackgroundColor,
 			OAuthAutoRedirect:     config.OAuthAutoRedirect,
 			CsrfCookieName:        csrfCookieName,
 			RedirectCookieName:    redirectCookieName,
@@ -298,6 +299,7 @@ func init() {
 	rootCmd.Flags().String("login-button-background-color", "", "Background color for the login submit button (e.g., #007bff).")
 	rootCmd.Flags().Bool("disable-language-selector", false, "Disable the language selector on the login page.")
 	rootCmd.Flags().String("favicon", "", "Custom favicon URL for the application.")
+	rootCmd.Flags().String("background-color", "", "Background color for the application (e.g., #000000 or oklch(14.5% 0 0)).")
 	rootCmd.Flags().String("forgot-password-message", "", "Message to show on the forgot password page.")
 	rootCmd.Flags().String("background-image", "/background.jpg", "Background image URL for the login page.")
 	rootCmd.Flags().String("ldap-address", "", "LDAP server address (e.g. ldap://localhost:389).")
@@ -380,6 +382,7 @@ func init() {
 	viper.BindEnv("login-button-background-color", "LOGIN_BUTTON_BACKGROUND_COLOR")
 	viper.BindEnv("disable-language-selector", "DISABLE_LANGUAGE_SELECTOR")
 	viper.BindEnv("favicon", "FAVICON")
+	viper.BindEnv("background-color", "BACKGROUND_COLOR")
 	viper.BindEnv("login-timeout", "LOGIN_TIMEOUT")
 	viper.BindEnv("login-max-retries", "LOGIN_MAX_RETRIES")
 	viper.BindEnv("forgot-password-message", "FORGOT_PASSWORD_MESSAGE")

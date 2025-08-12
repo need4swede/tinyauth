@@ -90,6 +90,7 @@ type AppContext struct {
 	LoginButtonBackgroundColor string `json:"loginButtonBackgroundColor"`
 	DisableLanguageSelector   bool   `json:"disableLanguageSelector"`
 	Favicon               string `json:"favicon"`
+	BackgroundColor       string `json:"backgroundColor"`
 	OAuthAutoRedirect     string   `json:"oauthAutoRedirect"`
 }
 

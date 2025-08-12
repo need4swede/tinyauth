@@ -80,6 +80,7 @@ type Config struct {
 	LoginButtonBackgroundColor string `mapstructure:"login-button-background-color"`
 	DisableLanguageSelector bool   `mapstructure:"disable-language-selector"`
 	Favicon                 string `mapstructure:"favicon"`
+	BackgroundColor         string `mapstructure:"background-color"`
 	LdapAddress             string `mapstructure:"ldap-address"`
 	LdapBindDN              string `mapstructure:"ldap-bind-dn"`
 	LdapBindPassword        string `mapstructure:"ldap-bind-password"`
@@ -135,6 +136,7 @@ type HandlersConfig struct {
 	LoginButtonBackgroundColor string
 	DisableLanguageSelector   bool
 	Favicon               string
+	BackgroundColor       string
 	OAuthAutoRedirect     string
 	CsrfCookieName        string
 	RedirectCookieName    string
