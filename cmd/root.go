@@ -116,6 +116,8 @@ var rootCmd = &cobra.Command{
 			LoginSubtitleColor:    config.LoginSubtitleColor,
 			UsernameTextColor:     config.UsernameTextColor,
 			PasswordTextColor:     config.PasswordTextColor,
+			UsernameInputColor:    config.UsernameInputColor,
+			PasswordInputColor:    config.PasswordInputColor,
 			GoogleButtonText:           config.GoogleButtonText,
 			GoogleButtonTextColor:      config.GoogleButtonTextColor,
 			GoogleButtonBackgroundColor: config.GoogleButtonBackgroundColor,
@@ -283,6 +285,8 @@ func init() {
 	rootCmd.Flags().String("login-subtitle-color", "", "Text color for the login subtitle (e.g., #666666).")
 	rootCmd.Flags().String("username-text-color", "", "Text color for the username field label (e.g., #333333).")
 	rootCmd.Flags().String("password-text-color", "", "Text color for the password field label (e.g., #333333).")
+	rootCmd.Flags().String("username-input-color", "", "Text color for the username input field value (e.g., #000000).")
+	rootCmd.Flags().String("password-input-color", "", "Text color for the password input field value (e.g., #000000).")
 	rootCmd.Flags().String("google-button-text", "", "Custom text for the Google OAuth button (e.g., 'Login with Google').")
 	rootCmd.Flags().String("google-button-text-color", "", "Text color for the Google OAuth button (e.g., #ffffff).")
 	rootCmd.Flags().String("google-button-background-color", "", "Background color for the Google OAuth button (e.g., #4285f4).")
@@ -371,6 +375,8 @@ func init() {
 	viper.BindEnv("login-subtitle-color", "LOGIN_SUBTITLE_COLOR")
 	viper.BindEnv("username-text-color", "USERNAME_TEXT_COLOR")
 	viper.BindEnv("password-text-color", "PASSWORD_TEXT_COLOR")
+	viper.BindEnv("username-input-color", "USERNAME_INPUT_COLOR")
+	viper.BindEnv("password-input-color", "PASSWORD_INPUT_COLOR")
 	viper.BindEnv("google-button-text", "GOOGLE_BUTTON_TEXT")
 	viper.BindEnv("google-button-text-color", "GOOGLE_BUTTON_TEXT_COLOR")
 	viper.BindEnv("google-button-background-color", "GOOGLE_BUTTON_BACKGROUND_COLOR")

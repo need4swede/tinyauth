@@ -32,7 +32,9 @@ export const LoginForm = (props: Props) => {
     usernamePlaceholder,
     passwordPlaceholder,
     usernameTextColor,
-    passwordTextColor
+    passwordTextColor,
+    usernameInputColor,
+    passwordInputColor
   } = useAppContext();
 
   z.config({
@@ -65,6 +67,9 @@ export const LoginForm = (props: Props) => {
                   placeholder={usernamePlaceholder || t("loginUsername")}
                   disabled={loading}
                   autoComplete="username"
+                  style={{
+                    color: usernameInputColor || undefined,
+                  }}
                   {...field}
                 />
               </FormControl>
@@ -92,6 +97,9 @@ export const LoginForm = (props: Props) => {
                     type="password"
                     disabled={loading}
                     autoComplete="current-password"
+                    style={{
+                      color: passwordInputColor || undefined,
+                    }}
                     {...field}
                   />
                 </FormControl>

@@ -25,6 +25,8 @@ export const appContextSchema = z.object({
   loginSubtitleColor: z.string().optional(),
   usernameTextColor: z.string().optional(),
   passwordTextColor: z.string().optional(),
+  usernameInputColor: z.string().optional(),
+  passwordInputColor: z.string().optional(),
   googleButtonText: z.string().optional(),
   googleButtonTextColor: z.string().optional(),
   googleButtonBackgroundColor: z.string().optional(),

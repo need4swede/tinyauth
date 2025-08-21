@@ -69,6 +69,8 @@ type AppContext struct {
 	LoginSubtitleColor    string   `json:"loginSubtitleColor"`
 	UsernameTextColor     string   `json:"usernameTextColor"`
 	PasswordTextColor     string   `json:"passwordTextColor"`
+	UsernameInputColor    string   `json:"usernameInputColor"`
+	PasswordInputColor    string   `json:"passwordInputColor"`
 	GoogleButtonText           string `json:"googleButtonText"`
 	GoogleButtonTextColor      string `json:"googleButtonTextColor"`
 	GoogleButtonBackgroundColor string `json:"googleButtonBackgroundColor"`

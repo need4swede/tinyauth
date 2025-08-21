@@ -59,6 +59,8 @@ type Config struct {
 	LoginSubtitleColor      string `mapstructure:"login-subtitle-color"`
 	UsernameTextColor       string `mapstructure:"username-text-color"`
 	PasswordTextColor       string `mapstructure:"password-text-color"`
+	UsernameInputColor      string `mapstructure:"username-input-color"`
+	PasswordInputColor      string `mapstructure:"password-input-color"`
 	GoogleButtonText           string `mapstructure:"google-button-text"`
 	GoogleButtonTextColor      string `mapstructure:"google-button-text-color"`
 	GoogleButtonBackgroundColor string `mapstructure:"google-button-background-color"`
@@ -120,6 +122,8 @@ type HandlersConfig struct {
 	LoginSubtitleColor    string
 	UsernameTextColor     string
 	PasswordTextColor     string
+	UsernameInputColor    string
+	PasswordInputColor    string
 	GoogleButtonText           string
 	GoogleButtonTextColor      string
 	GoogleButtonBackgroundColor string

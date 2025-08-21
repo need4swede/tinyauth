@@ -124,6 +124,8 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 	loginSubtitleColor := getDomainBranding(requestDomain, "LOGIN_SUBTITLE_COLOR", h.Config.LoginSubtitleColor)
 	usernameTextColor := getDomainBranding(requestDomain, "USERNAME_TEXT_COLOR", h.Config.UsernameTextColor)
 	passwordTextColor := getDomainBranding(requestDomain, "PASSWORD_TEXT_COLOR", h.Config.PasswordTextColor)
+	usernameInputColor := getDomainBranding(requestDomain, "USERNAME_INPUT_COLOR", h.Config.UsernameInputColor)
+	passwordInputColor := getDomainBranding(requestDomain, "PASSWORD_INPUT_COLOR", h.Config.PasswordInputColor)
 
 	// Get button customization branding
 	googleButtonText := getDomainBranding(requestDomain, "GOOGLE_BUTTON_TEXT", h.Config.GoogleButtonText)
@@ -201,6 +203,8 @@ func (h *Handlers) AppContextHandler(c *gin.Context) {
 		LoginSubtitleColor:    loginSubtitleColor,
 		UsernameTextColor:     usernameTextColor,
 		PasswordTextColor:     passwordTextColor,
+		UsernameInputColor:    usernameInputColor,
+		PasswordInputColor:    passwordInputColor,
 		GoogleButtonText:           googleButtonText,
 		GoogleButtonTextColor:      googleButtonTextColor,
 		GoogleButtonBackgroundColor: googleButtonBackgroundColor,
