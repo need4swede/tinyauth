@@ -1,0 +1,8 @@
+services:
+  tinyauth:
+    container_name: tinyauth
+    image: need4swede/tinyauth:latest
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-3000}:3000"
